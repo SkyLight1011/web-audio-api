@@ -1,0 +1,23 @@
+{
+  "name": "web-audio-api",
+  "version": "1.0.0",
+  "description": "Playing around with Web Audio API",
+  "main": "index.js",
+  "scripts": {
+    "start": "static src -p 4321"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SkyLight1011/web-audio-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SkyLight1011/web-audio-api/issues"
+  },
+  "homepage": "https://github.com/SkyLight1011/web-audio-api#readme",
+  "devDependencies": {
+    "node-static": "^0.7.10"
+  }
+}
