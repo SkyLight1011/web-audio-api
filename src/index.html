@@ -5,6 +5,41 @@
 	<title>Web Audio API</title>
 </head>
 <body>
+  <fieldset>
+    <legend>Master volume</legend>
+
+    <input type="range" id="master" min="0" max="1" step="0.01" value="0.5">
+    <label for="master"></label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Basic tone ("SPACE" for sound test)</legend>
+
+    <div>
+      Type:
+      <select id="type">
+        <option value="sine">Sine</option>
+        <option value="square">Square (Pulse)</option>
+        <option value="triangle">Triangle</option>
+        <option value="sawtooth">Sawtooth</option>
+      </select>
+      <label for="type"></label>
+    </div>
+
+    <div>
+      Frequency:
+      <input type="range" id="frequency" min="20" max="2000" value="440">
+      <label for="frequency"></label>
+    </div>
+
+    <div>
+      Detune:
+      <input type="range" id="detune" min="-4000" max="4000" step="50" value="0">
+      <label for="detune"></label>
+    </div>
+  </fieldset>
+
 	<script type="module" src="/index.js"></script>
+  <script type="module" src="/basic-tone.js"></script>
 </body>
 </html>
