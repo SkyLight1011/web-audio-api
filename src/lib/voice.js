@@ -35,6 +35,7 @@ export class VoiceNode extends GainNode {
       this._osc.push(osc);
     }
 
+    this._osc[1].detune.value = -1200;
     this._osc[1].detune.value = -1700;
     this._osc[2].detune.value = -2400;
   }

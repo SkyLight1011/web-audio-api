@@ -22,7 +22,7 @@ export class TestAudioContext extends AudioContext {
     return new VoiceNode(this, note, preset);
   }
 
-  createInstrument() {
-    return new InstrumentNode(this);
+  createInstrument(preset) {
+    return new InstrumentNode(this, preset);
   }
 }

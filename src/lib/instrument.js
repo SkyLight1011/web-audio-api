@@ -1,16 +1,17 @@
 export class InstrumentNode extends GainNode {
-  constructor(ctx) {
+  constructor(ctx, preset = {}) {
     super(ctx);
 
+    this._preset = preset;
     this._active = {};
   }
 
   play(note, at = 0, dur = 0) {
     if (this._active[note]) {
-      this._active[note].stop(at, true);
+      this._active[note].stop(at);
     }
 
-    let voice = this.context.createVoice(note);
+    let voice = this.context.createVoice(note, this._preset.voice);
 
     this._active[note] = voice;
     voice.connect(this);
