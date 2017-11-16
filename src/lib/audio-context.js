@@ -1,5 +1,7 @@
 import {GeneratorNode} from './generator.js';
 import {EnvelopeNode} from './envelope.js';
+import {VoiceNode} from './voice.js';
+import {InstrumentNode} from './instrument.js';
 
 export class TestAudioContext extends AudioContext {
   constructor() {
@@ -14,5 +16,13 @@ export class TestAudioContext extends AudioContext {
 
   createEnvelope(preset) {
     return new EnvelopeNode(this, preset);
+  }
+
+  createVoice(note, preset) {
+    return new VoiceNode(this, note, preset);
+  }
+
+  createInstrument() {
+    return new InstrumentNode(this);
   }
 }
