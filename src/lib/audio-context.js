@@ -6,6 +6,7 @@ import {VoiceNode} from './voice.js';
 import {InstrumentNode} from './instrument.js';
 import {MixerNode} from './mixer.js';
 import {ReverbNode} from './reverb.js';
+import {FeedbackDelayNode} from './feedback-delay.js';
 
 export class TestAudioContext extends AudioContext {
   constructor() {
@@ -36,5 +37,9 @@ export class TestAudioContext extends AudioContext {
 
   createReverb(seconds, options) {
     return new ReverbNode(this, seconds, options);
+  }
+
+  createFeedbackDelay(delay, feedback) {
+    return new FeedbackDelayNode(this, delay, feedback);
   }
 }
