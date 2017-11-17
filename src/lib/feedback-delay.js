@@ -1,9 +1,9 @@
 export class FeedbackDelayNode extends GainNode {
   constructor(ctx, preset = {}) {
+    super(ctx);
+
     let delay = this.context.createDelay();
     let feedback = this.context.createGain();
-
-    super(ctx);
 
     this._preset = Object.assign({
       delay: 0.5,
