@@ -1,8 +1,11 @@
+import './overrides.js';
+
 import {GeneratorNode} from './generator.js';
 import {EnvelopeNode} from './envelope.js';
 import {VoiceNode} from './voice.js';
 import {InstrumentNode} from './instrument.js';
 import {MixerNode} from './mixer.js';
+import {ReverbNode} from './reverb.js';
 
 export class TestAudioContext extends AudioContext {
   constructor() {
