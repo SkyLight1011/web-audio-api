@@ -33,4 +33,8 @@ export class TestAudioContext extends AudioContext {
   createMixer() {
     return new MixerNode(this);
   }
+
+  createReverb(seconds, options) {
+    return new ReverbNode(this, seconds, options);
+  }
 }
