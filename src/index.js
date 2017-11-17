@@ -51,7 +51,7 @@ document.querySelector('#runGenerator').addEventListener('click', e => {
 
   generator.type = 'triangle';
   generator.frequency.value = 100;
-  generator.gain.value = 0.1;
+  generator.gain.value = 0.5;
 
   generator.start(0, 1);
   generator.to(ctx.destination);
