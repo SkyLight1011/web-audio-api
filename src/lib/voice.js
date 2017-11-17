@@ -8,10 +8,21 @@ export class VoiceNode extends GainNode {
   }
 
   play(at = 0, dur = 0) {
+    let output = this;
+
     this._setup();
 
+    if (this._preset.env) {
+      this._env = this.context.createEnvelope(this._preset.env);
+
+      this._env.connect(output);
+      this._env.trigger(at, dur);
+
+      output = this._env;
+    }
+
     for (let osc of this._osc) {
-      osc.connect(this);
+      osc.connect(output);
       osc.start(at);
     }
 
@@ -19,9 +30,16 @@ export class VoiceNode extends GainNode {
   }
 
   stop(at = 0) {
+    if (this._env) {
+      this._env.release(at);
+    }
+
     for (let osc of this._osc) {
-      osc.stop(at);
-      osc.disconnect();
+      osc.stop(at + this._env ? this._preset.env.r : 0);
+
+      osc.onended = () => {
+        osc.disconnect();
+      }
     }
   }
 

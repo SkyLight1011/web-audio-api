@@ -2,7 +2,16 @@ export class InstrumentNode extends GainNode {
   constructor(ctx, preset = {}) {
     super(ctx);
 
-    this._preset = preset;
+    this._preset = Object.assign({
+      voice: {
+        env: {
+          attack: 0,
+          decay: 0,
+          sustain: 0,
+          release: 0
+        }
+      }
+    }, preset);
     this._active = {};
   }
 
@@ -21,9 +30,11 @@ export class InstrumentNode extends GainNode {
   stop(note, at = 0) {
     if (this._active[note]) {
       this._active[note].stop(at);
-      this._active[note].disconnect();
 
-      delete this._active[note];
+      this._active[note].onended = () => {
+        this._active[note].disconnect();
+        delete this._active[note];
+      }
     }
   }
 }
