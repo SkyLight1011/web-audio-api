@@ -10,27 +10,27 @@ let instrument = ctx.createInstrument({
   voice: {
     osc: [
       {
-        type: 'sawtooth'
+        type: 'square'
       },
       {
-        type: 'sawtooth',
+        type: 'square',
         detune: -1700
       },
       {
-        type: 'sawtooth',
+        type: 'square',
         detune: -2400
       }
     ],
     env: {
-      attack: 0,
-      decay: 0,
+      attack: 0.01,
+      decay: 0.5,
       sustain: 1,
-      release: 0
+      release: 0.5
     }
   }
 });
 let eq = ctx.createBiquadFilter();
-let rev = ctx.createReverb(0.5, {decay: 5});
+let rev = ctx.createReverb(1, {decay: 5});
 
 mixer.gain.value = 0.1;
 mixer.assignInstrument(instrument, 1);
@@ -57,7 +57,17 @@ document.querySelector('#runGenerator').addEventListener('click', e => {
 document.addEventListener('keydown', e => {
   let note = getNoteByKeyCode(e.keyCode);
 
-  if (active[e.keyCode] || !note) {
+  if (active[e.keyCode]) {
+    return;
+  }
+
+  if (e.keyCode === 107) {
+    octave++;
+  } else if (e.keyCode === 109) {
+    octave--;
+  }
+
+  if (!note) {
     return;
   }
 
