@@ -43,6 +43,9 @@ eq.frequency.value = 150;
 eq.gain.value = 25;
 mixer.addFx(eq, 1);
 
+let fd = ctx.createFeedbackDelay();
+mixer.addFx(fd, 1);
+
 document.querySelector('#runGenerator').addEventListener('click', e => {
   let generator = ctx.createGenerator();
 

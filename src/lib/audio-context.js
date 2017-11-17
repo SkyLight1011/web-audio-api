@@ -39,7 +39,7 @@ export class TestAudioContext extends AudioContext {
     return new ReverbNode(this, seconds, options);
   }
 
-  createFeedbackDelay(delay, feedback) {
-    return new FeedbackDelayNode(this, delay, feedback);
+  createFeedbackDelay(preset) {
+    return new FeedbackDelayNode(this, preset);
   }
 }
