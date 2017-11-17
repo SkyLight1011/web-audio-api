@@ -44,18 +44,16 @@ export class VoiceNode extends GainNode {
   }
 
   _setup() {
-    for (let i = 0; i++ < 3;) {
+    for (let i = 0; i < 2; i++) {
       let osc = this.context.createGenerator();
 
-      osc.type = 'sawtooth';
+      osc.type = this._preset.osc[i].type || 'sine';
+      osc.detune.value = this._preset.osc[i].detune || 0;
+      osc.gain.value = this._preset.osc[i].gain || 1;
       osc.frequency.value = this._frequencyFromNoteNumber(this._note);
 
       this._osc.push(osc);
     }
-
-    this._osc[1].detune.value = -1200;
-    this._osc[1].detune.value = -1700;
-    this._osc[2].detune.value = -2400;
   }
 
   _frequencyFromNoteNumber(note) {

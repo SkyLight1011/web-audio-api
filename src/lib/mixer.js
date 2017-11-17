@@ -11,10 +11,11 @@ export class MixerNode extends GainNode {
         master: this.context.createGain()
       };
 
-      this._tracks.push(track);
+      track.fx[0]
+        .connect(track.master)
+        .connect(this);
 
-      tracks.fx[0].connect(track.master);
-      track.master.connect(this);
+      this._tracks.push(track);
     }
   }
 

@@ -4,10 +4,23 @@ export class InstrumentNode extends GainNode {
 
     this._preset = Object.assign({
       voice: {
+        osc: [
+          {
+            type: 'sawtooth'
+          },
+          {
+            type: 'sawtooth',
+            detune: -1700
+          },
+          {
+            type: 'sawtooth',
+            detune: -2400
+          }
+        ],
         env: {
           attack: 0,
           decay: 0,
-          sustain: 0,
+          sustain: 1,
           release: 0
         }
       }
