@@ -33,7 +33,7 @@ let eq = ctx.createBiquadFilter();
 let rev = ctx.createReverb(1, {decay: 5});
 
 mixer.gain.value = 0.1;
-mixer.assignInstrument(instrument, 1);
+//mixer.assignInstrument(instrument, 1);
 mixer.to(ctx.destination);
 
 mixer.addFx(rev, 1);
@@ -45,6 +45,13 @@ mixer.addFx(eq, 1);
 
 let fd = ctx.createFeedbackDelay();
 mixer.addFx(fd, 1);
+
+let seq = ctx.createSequencer(mixer);
+
+seq.assignInstrument(instrument, 1);
+seq.assignNote(1, [46, 0, 0.8], [41, 1, 0.4], [39, 1.5, 0.4]);
+
+console.log('sequencer', seq);
 
 document.querySelector('#runGenerator').addEventListener('click', e => {
   let generator = ctx.createGenerator();
@@ -68,6 +75,8 @@ document.addEventListener('keydown', e => {
     octave++;
   } else if (e.keyCode === 109) {
     octave--;
+  } else if (e.keyCode === 13) {
+    seq.play();
   }
 
   if (!note) {
