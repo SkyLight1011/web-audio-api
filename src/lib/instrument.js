@@ -14,7 +14,7 @@ export class InstrumentNode extends GainNode {
     let voice = this.context.createVoice(note, this._preset.voice);
 
     this._active[note] = voice;
-    voice.connect(this);
+    voice.to(this);
     voice.play(at, dur);
   }
 
@@ -23,9 +23,13 @@ export class InstrumentNode extends GainNode {
       this._active[note].stop(at);
 
       this._active[note].onended = () => {
-        this._active[note].disconnect();
+        this._active[note].cut();
         delete this._active[note];
       }
     }
+  }
+
+  get [Symbol.toStringTag]() {
+    return 'InstrumentNode';
   }
 }

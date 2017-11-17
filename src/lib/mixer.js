@@ -12,8 +12,8 @@ export class MixerNode extends GainNode {
       };
 
       track.fx[0]
-        .connect(track.master)
-        .connect(this);
+        .to(track.master)
+        .to(this);
 
       this._tracks.push(track);
     }
@@ -23,19 +23,19 @@ export class MixerNode extends GainNode {
     let track = this._tracks[trackNo - 1];
 
     if (track.instrument) {
-      track.instrument.disconnect();
+      track.instrument.cut();
     }
 
     track.instrument = instrument;
-    track.instrument.connect(track.fx[0]);
+    track.instrument.to(track.fx[0]);
   }
 
   addFx(fxNode, trackNo = 1) {
     let track = this._tracks[trackNo - 1];
     let lastFx = track.fx[track.fx.length - 1];
 
-    lastFx.disconnect();
-    lastFx.connect(fxNode).connect(track.master);
+    lastFx.cut();
+    lastFx.to(fxNode).to(track.master);
 
     track.fx.push(fxNode);
   }

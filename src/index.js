@@ -30,10 +30,13 @@ let instrument = ctx.createInstrument({
   }
 });
 let eq = ctx.createBiquadFilter();
+let rev = ctx.createReverb(0.5, {decay: 5});
 
 mixer.gain.value = 0.1;
 mixer.assignInstrument(instrument, 1);
-mixer.connect(ctx.destination);
+mixer.to(ctx.destination);
+
+mixer.addFx(rev, 1);
 
 eq.type = 'lowshelf';
 eq.frequency.value = 150;
@@ -48,7 +51,7 @@ document.querySelector('#runGenerator').addEventListener('click', e => {
   generator.gain.value = 0.1;
 
   generator.start(0, 1);
-  generator.connect(ctx.destination);
+  generator.to(ctx.destination);
 });
 
 document.addEventListener('keydown', e => {
@@ -59,6 +62,7 @@ document.addEventListener('keydown', e => {
   }
 
   console.log(`playing ${note}...`);
+  console.log('instrument state', instrument);
 
   instrument.play(note);
 

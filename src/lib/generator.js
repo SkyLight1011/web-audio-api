@@ -8,7 +8,7 @@ export class GeneratorNode extends GainNode {
       this[key] = this._osc[key];
     }
 
-    this._osc.connect(this);
+    this._osc.to(this);
   }
 
   get type() {
