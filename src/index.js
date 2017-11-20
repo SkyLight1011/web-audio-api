@@ -79,9 +79,9 @@ instrument = ctx.createInstrument({
     },
     env: {
       attack: 0.01,
-      decay: 0.3,
+      decay: 0.2,
       sustain: 1,
-      release: 0.3
+      release: 0.2
     }
   }
 });
@@ -89,9 +89,11 @@ instrument = ctx.createInstrument({
 seq.assignInstrument(instrument, 2);
 seq.assignNote(2,
   [67, 0, 1], [65, 3, 1], [60, 6, 1],
-  [60, 10, 1], [60, 13, 1], [62, 16, 1],
-  [64, 19, 1], [58, 22, 1], [56, 26, 1], [53, 29, 1]
+  [60, 10, 0.5], [60, 13, 1], [62, 16, 1],
+  [63, 19, 1], [58, 22, 1], [56, 26, 1], [53, 29, 1]
 );
+seq.setVolume(0.5, 2);
+mixer.addFx(ctx.createFeedbackDelay(), 2);
 
 console.log('sequencer', seq);
 

@@ -39,4 +39,8 @@ export class MixerNode extends GainNode {
 
     track.fx.push(fxNode);
   }
+
+  setVolume(volume, trackNo = 1) {
+    this._tracks[trackNo - 1].master.gain.value = volume;
+  }
 }

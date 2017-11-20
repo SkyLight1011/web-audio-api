@@ -53,6 +53,10 @@ export class SequencerNode extends GainNode {
     track.notes = track.notes.concat(notes);
   }
 
+  setVolume(volume, trackNo = 1) {
+    this._tracks[trackNo - 1].master.gain.value = volume;
+  }
+
   play(loop = false, trackNo) {
     let tracks = this._tracks;
 
