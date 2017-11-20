@@ -21,6 +21,16 @@ export class VoiceNode extends GainNode {
       output = this._env;
     }
 
+    if (this._preset.noize) {
+      let noize = this.context.createNoize(this._preset.noize.type || 'white');
+
+      noize.gain.value = this._preset.noize.gain || 1;
+      noize.detune.value = this._preset.noize.detune || 0;
+
+      noize.to(output);
+      noize.start(at);
+    }
+
     for (let osc of this._osc) {
       osc.to(output);
       osc.start(at);

@@ -31,14 +31,13 @@ let instrument = ctx.createInstrument({
 });
 let eq = ctx.createBiquadFilter();
 
-mixer.gain.value = 0.1;
+mixer.gain.value = 0.3;
 mixer.to(ctx.destination);
 
 eq.type = 'lowpass';
 eq.frequency.value = 150;
 eq.gain.value = 25;
 mixer.addFx(eq, 1);
-eq.frequency.linearRampToValueAtTime(10000, 20);
 
 let comp = ctx.createDynamicsCompressor();
 comp.threshold.value = -25;
@@ -57,6 +56,38 @@ seq.assignNote(1,
   [39, 16, 1], [39, 19, 1], [39, 22, 1],
   [39, 25, 1], [41, 28, 1], [44, 30, 1]
 );
+
+instrument = ctx.createInstrument({
+  voice: {
+    osc: [
+      {
+        type: 'triangle'
+      },
+      {
+        type: 'sawtooth',
+        detune: 700,
+        gain: 0.3
+      },
+      {
+        type: 'sine',
+        detune: 700
+      }
+    ],
+    noize: {
+      type: 'pink',
+      gain: 0.5
+    },
+    env: {
+      attack: 0.01,
+      decay: 0.3,
+      sustain: 1,
+      release: 0.3
+    }
+  }
+});
+
+seq.assignInstrument(instrument, 2);
+//seq.assignNote(1, []);
 
 console.log('sequencer', seq);
 

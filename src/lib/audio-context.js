@@ -8,6 +8,7 @@ import {MixerNode} from './mixer.js';
 import {ReverbNode} from './reverb.js';
 import {FeedbackDelayNode} from './feedback-delay.js';
 import {SequencerNode} from './sequencer.js';
+import {NoizeNode} from './noize.js';
 
 export class TestAudioContext extends AudioContext {
   constructor() {
@@ -46,5 +47,9 @@ export class TestAudioContext extends AudioContext {
 
   createSequencer(mixer) {
     return new SequencerNode(this, mixer);
+  }
+
+  createNoize(type) {
+    return new NoizeNode(this, type);
   }
 }
