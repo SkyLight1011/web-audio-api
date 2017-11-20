@@ -35,7 +35,7 @@ export class VoiceNode extends GainNode {
     }
 
     for (let osc of this._osc) {
-      osc.stop(at + this._env ? this._preset.env.release : 0);
+      osc.stop(at + (this._env ? this._preset.env.release : 0));
 
       osc.onended = () => {
         osc.cut();
