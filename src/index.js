@@ -75,7 +75,7 @@ instrument = ctx.createInstrument({
     ],
     noize: {
       type: 'pink',
-      gain: 0.5
+      gain: 0.3
     },
     env: {
       attack: 0.01,
@@ -87,7 +87,11 @@ instrument = ctx.createInstrument({
 });
 
 seq.assignInstrument(instrument, 2);
-//seq.assignNote(1, []);
+seq.assignNote(2,
+  [67, 0, 1], [65, 3, 1], [60, 6, 1],
+  [60, 10, 1], [60, 13, 1], [62, 16, 1],
+  [64, 19, 1], [58, 22, 1], [56, 26, 1], [53, 29, 1]
+);
 
 console.log('sequencer', seq);
 
@@ -115,6 +119,12 @@ document.addEventListener('keydown', e => {
     octave--;
   } else if (e.keyCode === 13) {
     seq.play(true);
+  } else if (e.keyCode === 27) {
+    seq.stop();
+  } else if (e.key === '1') {
+    seq.play(true, 1);
+  } else if (e.key === '2') {
+    seq.play(true, 2);
   }
 
   if (!note) {
