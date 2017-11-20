@@ -14,42 +14,49 @@ let instrument = ctx.createInstrument({
       },
       {
         type: 'square',
-        detune: -1700
+        detune: 1200
       },
       {
         type: 'square',
-        detune: -2400
+        detune: 700
       }
     ],
     env: {
       attack: 0.01,
-      decay: 0.5,
+      decay: 0,
       sustain: 1,
-      release: 0.5
+      release: 0.2
     }
   }
 });
 let eq = ctx.createBiquadFilter();
-let rev = ctx.createReverb(1, {decay: 5});
 
 mixer.gain.value = 0.1;
-//mixer.assignInstrument(instrument, 1);
 mixer.to(ctx.destination);
 
-mixer.addFx(rev, 1);
-
-eq.type = 'lowshelf';
+eq.type = 'lowpass';
 eq.frequency.value = 150;
 eq.gain.value = 25;
 mixer.addFx(eq, 1);
+eq.frequency.linearRampToValueAtTime(10000, 20);
 
-let fd = ctx.createFeedbackDelay();
-mixer.addFx(fd, 1);
+let comp = ctx.createDynamicsCompressor();
+comp.threshold.value = -25;
+comp.knee.value - 40;
+comp.ratio.value = 12;
+comp.attack.value = 0;
+comp.release.value = 0.25;
+mixer.addFx(comp, 1);
 
 let seq = ctx.createSequencer(mixer);
 
 seq.assignInstrument(instrument, 1);
-seq.assignNote(1, [46, 0, 0.8], [41, 1, 0.4], [39, 1.5, 0.4]);
+seq.assignNote(1,
+  [46, 0, 1], [46, 3, 1], [46, 6, 1],
+  [41, 9, 1], [41, 12, 1], [41, 14, 1],
+  [39, 16, 1], [39, 19, 1], [39, 22, 1],
+  [39, 25, 1], [41, 28, 1], [44, 30, 1]
+);
 
 console.log('sequencer', seq);
 
@@ -76,7 +83,7 @@ document.addEventListener('keydown', e => {
   } else if (e.keyCode === 109) {
     octave--;
   } else if (e.keyCode === 13) {
-    seq.play();
+    seq.play(true);
   }
 
   if (!note) {

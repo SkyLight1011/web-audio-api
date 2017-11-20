@@ -19,6 +19,14 @@ export class InstrumentNode extends GainNode {
   }
 
   stop(note, at = 0) {
+    if (!note) {
+      for (let note in this._active) {
+        this.stop(note);
+      }
+
+      return;
+    }
+
     if (this._active[note]) {
       this._active[note].stop(at);
 
