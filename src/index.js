@@ -41,6 +41,12 @@ seq.assignNote(2,
 seq.setVolume(0.5, 2);
 mixer.addFx(ctx.createFeedbackDelay(), 2);
 
+let eq2 = ctx.createBiquadFilter();
+eq2.type = 'highpass';
+eq2.frequency.value = 100;
+eq2.gain.value = 25;
+mixer.addFx(eq2, 3);
+
 let instrumentConfigs = [
   {
     name: 'Bass',
@@ -69,7 +75,7 @@ let instrumentConfigs = [
     }
   },
   {
-    name: 'Noized lead',
+    name: 'Power saw',
     preset: {
       voice: {
         osc: [
@@ -95,6 +101,25 @@ let instrumentConfigs = [
           decay: 0.2,
           sustain: 1,
           release: 0.2
+        }
+      }
+    }
+  },
+  {
+    name: 'Another lead',
+    preset: {
+      voice: {
+        gain: 0.1,
+        osc: [
+          {type: 'sine', detune: 2400},
+          {type: 'triangle', detune: 2400},
+          {type: 'triangle', detune: 2100}
+        ],
+        env: {
+          attack: 0.3,
+          decay: 2,
+          sustain: 0.5,
+          release: 0.5
         }
       }
     }
