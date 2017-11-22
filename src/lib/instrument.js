@@ -1,8 +1,9 @@
 export class InstrumentNode extends GainNode {
-  constructor(ctx, preset = {}) {
+  constructor(ctx, config = {}) {
     super(ctx);
 
-    this._preset = Object.assign({}, preset);
+    this.name = config.name;
+    this._preset = Object.assign({}, config.preset);
     this._active = {};
   }
 

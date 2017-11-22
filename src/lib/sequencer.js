@@ -24,11 +24,29 @@ export class SequencerNode extends GainNode {
   }
 
   assignInstrument(instrument, trackNo = 1) {
+    let track = this.getTrack(trackNo, true);
+
+    track.instrument && track.instrument.cut(track.master);
+
+    track.instrument = instrument;
+    instrument.to(track.master);
+    this._mixer.assignInstrument(track.master, trackNo);
+  }
+
+  assignNote(trackNo, ...notes) {
+    let track = this.getTrack(trackNo);
+
+    if (!track) {
+      return;
+    }
+
+    track.notes = track.notes.concat(notes);
+  }
+
+  getTrack(trackNo, create) {
     let track = this._tracks[trackNo - 1];
 
-    if (track) {
-      track.instrument.cut(track.master);
-    } else {
+    if (!track && create) {
       track = {
         instrument: null,
         master: this.context.createGain(),
@@ -38,23 +56,11 @@ export class SequencerNode extends GainNode {
       this._tracks.push(track);
     }
 
-    track.instrument = instrument;
-    instrument.to(track.master);
-    this._mixer.assignInstrument(track.master, trackNo);
-  }
-
-  assignNote(trackNo, ...notes) {
-    let track = this._tracks[trackNo - 1];
-
-    if (!track) {
-      return;
-    }
-
-    track.notes = track.notes.concat(notes);
+    return track;
   }
 
   setVolume(volume, trackNo = 1) {
-    this._tracks[trackNo - 1].master.gain.value = volume;
+    this.getTrack(trackNo, true).master.gain.value = volume;
   }
 
   play(loop = false, trackNo) {

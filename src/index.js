@@ -6,29 +6,7 @@ let active = {};
 let octave = 4;
 let keys = [65, 87, 83, 69, 68, 70, 82, 71, 84, 72, 89, 74];
 let mixer = ctx.createMixer();
-let instrument = ctx.createInstrument({
-  voice: {
-    osc: [
-      {
-        type: 'square'
-      },
-      {
-        type: 'square',
-        detune: 1200
-      },
-      {
-        type: 'square',
-        detune: 700
-      }
-    ],
-    env: {
-      attack: 0.01,
-      decay: 0,
-      sustain: 1,
-      release: 0.2
-    }
-  }
-});
+let instrument;
 let eq = ctx.createBiquadFilter();
 
 mixer.gain.value = 0.3;
@@ -49,44 +27,12 @@ mixer.addFx(comp, 1);
 
 let seq = ctx.createSequencer(mixer);
 
-seq.assignInstrument(instrument, 1);
 seq.assignNote(1,
   [46, 0, 1], [46, 3, 1], [46, 6, 1],
   [41, 9, 1], [41, 12, 1], [41, 14, 1],
   [39, 16, 1], [39, 19, 1], [39, 22, 1],
   [39, 25, 1], [41, 28, 1], [44, 30, 1]
 );
-
-instrument = ctx.createInstrument({
-  voice: {
-    osc: [
-      {
-        type: 'triangle'
-      },
-      {
-        type: 'sawtooth',
-        detune: 700,
-        gain: 0.3
-      },
-      {
-        type: 'sine',
-        detune: 700
-      }
-    ],
-    noize: {
-      type: 'pink',
-      gain: 0.3
-    },
-    env: {
-      attack: 0.01,
-      decay: 0.2,
-      sustain: 1,
-      release: 0.2
-    }
-  }
-});
-
-seq.assignInstrument(instrument, 2);
 seq.assignNote(2,
   [67, 0, 1], [65, 3, 1], [60, 6, 1],
   [60, 10, 0.5], [60, 13, 1], [62, 16, 1],
@@ -94,6 +40,82 @@ seq.assignNote(2,
 );
 seq.setVolume(0.5, 2);
 mixer.addFx(ctx.createFeedbackDelay(), 2);
+
+let instrumentConfigs = [
+  {
+    name: 'Bass',
+    preset: {
+      voice: {
+        osc: [
+          {
+            type: 'square'
+          },
+          {
+            type: 'square',
+            detune: 1200
+          },
+          {
+            type: 'square',
+            detune: 700
+          }
+        ],
+        env: {
+          attack: 0.01,
+          decay: 0,
+          sustain: 1,
+          release: 0.2
+        }
+      }
+    }
+  },
+  {
+    name: 'Noized lead',
+    preset: {
+      voice: {
+        osc: [
+          {
+            type: 'triangle'
+          },
+          {
+            type: 'sawtooth',
+            detune: 700,
+            gain: 0.3
+          },
+          {
+            type: 'sine',
+            detune: 700
+          }
+        ],
+        noize: {
+          type: 'pink',
+          gain: 0.3
+        },
+        env: {
+          attack: 0.01,
+          decay: 0.2,
+          sustain: 1,
+          release: 0.2
+        }
+      }
+    }
+  }
+];
+let instruments = instrumentConfigs.map(config => ctx.createInstrument(config));
+let instrumentsContainer = document.querySelector('#instrumentsContainer');
+let selectedInstrument;
+
+instruments.forEach((instrument, i) => {
+  seq.assignInstrument(instrument, i + 1);
+
+  let btn = document.createElement('button');
+  btn.dataset.instrumentNo = i;
+  btn.innerText = instrument.name || `Instrument ${i + 1}`;
+  btn.onclick = e => selectedInstrument = instrument;
+
+  instrumentsContainer.appendChild(btn);
+});
+
+selectedInstrument = instruments[0];
 
 console.log('sequencer', seq);
 
@@ -134,9 +156,9 @@ document.addEventListener('keydown', e => {
   }
 
   console.log(`playing ${note}...`);
-  console.log('instrument state', instrument);
+  console.log('instrument state', selectedInstrument);
 
-  instrument.play(note);
+  selectedInstrument.play(note);
 
   active[e.keyCode] = true;
 });
@@ -150,7 +172,7 @@ document.addEventListener('keyup', e => {
 
   console.log(`stopped ${note}`);
 
-  instrument.stop(note);
+  selectedInstrument.stop(note);
 
   active[e.keyCode] = false;
 });
