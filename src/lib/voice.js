@@ -1,4 +1,8 @@
 export class VoiceNode extends GainNode {
+  get [Symbol.toStringTag]() {
+    return 'VoiceNode';
+  }
+
   constructor(ctx, note, preset = {}) {
     super(ctx);
 
@@ -24,13 +28,13 @@ export class VoiceNode extends GainNode {
     }
 
     if (this._preset.noize) {
-      let noize = this.context.createNoize(this._preset.noize.type || 'white');
+      this._noize = this.context.createNoize(this._preset.noize.type || 'white');
 
-      noize.gain.value = this._preset.noize.gain || 1;
-      noize.detune.value = this._preset.noize.detune || 0;
+      this._noize.gain.value = this._preset.noize.gain || 1;
+      this._noize.detune.value = this._preset.noize.detune || 0;
 
-      noize.to(output);
-      noize.start(at);
+      this._noize.to(output);
+      this._noize.start(at);
     }
 
     for (let osc of this._osc) {
@@ -42,23 +46,32 @@ export class VoiceNode extends GainNode {
   }
 
   stop(at = 0) {
+    let t = at + (this._env ? this._preset.env.release : 0);
+
     if (this._env) {
       this._env.release(at);
     }
 
     for (let osc of this._osc) {
-      osc.stop(at + (this._env ? this._preset.env.release : 0));
+      osc.stop(t);
 
-      osc.onended = () => {
-        osc.cut();
-      }
+      osc.onended = () => osc.cut();
+    }
+
+    if (this._noize) {
+      this._noize.stop(t);
+
+      this._noize.onended = () => this._noize.cut();
     }
   }
 
   _setup() {
+    let oscIndex = 1;
+
     for (let preset of this._preset.osc) {
       let osc = this.context.createGenerator();
 
+      osc.name = preset.name || `OSC ${oscIndex++}`;
       osc.type = preset.type || 'sine';
       osc.detune.value = preset.detune || 0;
       osc.gain.value = preset.gain || 1;

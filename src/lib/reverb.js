@@ -1,4 +1,8 @@
 export class ReverbNode extends GainNode {
+  get [Symbol.toStringTag]() {
+    return 'ReverbNode';
+  }
+
   constructor(ctx, seconds, preset = {}) {
     super(ctx);
 

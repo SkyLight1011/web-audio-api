@@ -1,4 +1,8 @@
 export class MixerNode extends GainNode {
+  get [Symbol.toStringTag]() {
+    return 'MixerNode';
+  }
+
   constructor(ctx) {
     super(ctx);
 

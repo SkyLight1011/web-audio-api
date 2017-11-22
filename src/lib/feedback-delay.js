@@ -1,4 +1,8 @@
 export class FeedbackDelayNode extends GainNode {
+  get [Symbol.toStringTag]() {
+    return 'FeedbackDelayNode';
+  }
+
   constructor(ctx, preset = {}) {
     super(ctx);
 

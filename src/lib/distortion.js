@@ -1,4 +1,8 @@
 export class DistortionNode extends GainNode {
+  get [Symbol.toStringTag]() {
+    return 'DistortionNode';
+  }
+
   constructor(ctx, preset = {}) {
     super(ctx);
 

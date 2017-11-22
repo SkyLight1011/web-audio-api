@@ -1,4 +1,8 @@
 export class InstrumentNode extends GainNode {
+  get [Symbol.toStringTag]() {
+    return 'InstrumentNode';
+  }
+
   constructor(ctx, config = {}) {
     super(ctx);
 
@@ -36,9 +40,5 @@ export class InstrumentNode extends GainNode {
         delete this._active[note];
       }
     }
-  }
-
-  get [Symbol.toStringTag]() {
-    return 'InstrumentNode';
   }
 }

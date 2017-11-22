@@ -1,4 +1,8 @@
 export class EnvelopeNode extends GainNode {
+  get [Symbol.toStringTag]() {
+    return 'EnvelopeNode';
+  }
+
   constructor(ctx, preset = {}) {
     super(ctx);
 

@@ -1,4 +1,8 @@
 export class GeneratorNode extends GainNode {
+  get [Symbol.toStringTag]() {
+    return 'GeneratorNode';
+  }
+
   constructor(ctx) {
     super(ctx);
 
