@@ -3,7 +3,7 @@ Playing around with Web Audio API (https://developer.mozilla.org/en-US/docs/Web/
 
 This is just an experiment to build a Synth with Web Audio API
 
-# Start the static server
+# Demo
 Use `npm start` to run a static server (probably will be updated later to "not-so-static")
 then open `http://localhost:4321/` in browser.
 
