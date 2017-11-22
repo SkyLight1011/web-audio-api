@@ -5,6 +5,8 @@ export class VoiceNode extends GainNode {
     this._note = note;
     this._preset = preset;
     this._osc = [];
+
+    this._preset.gain && (this.gain.value = this._preset.gain);
   }
 
   play(at = 0, dur = 0) {
