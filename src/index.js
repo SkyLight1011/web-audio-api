@@ -123,11 +123,31 @@ let instrumentConfigs = [
         }
       }
     }
+  },
+  {
+    name: 'Distorted',
+    preset: {
+      voice: {
+        osc: [
+          {type: 'sine'},
+          {type: 'triangle'},
+          {type: 'sawtooth'},
+        ],
+        env: {
+          attack: 0.02,
+          decay: 0,
+          sustain: 1,
+          release: 0.5
+        }
+      }
+    }
   }
 ];
 let instruments = instrumentConfigs.map(config => ctx.createInstrument(config));
 let instrumentsContainer = document.querySelector('#instrumentsContainer');
 let selectedInstrument;
+
+mixer.addFx(ctx.createDistortion(), 4);
 
 instruments.forEach((instrument, i) => {
   seq.assignInstrument(instrument, i + 1);

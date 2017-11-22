@@ -9,6 +9,7 @@ import {ReverbNode} from './reverb.js';
 import {FeedbackDelayNode} from './feedback-delay.js';
 import {SequencerNode} from './sequencer.js';
 import {NoizeNode} from './noize.js';
+import {DistortionNode} from './distortion.js';
 
 export class TestAudioContext extends AudioContext {
   constructor() {
@@ -51,5 +52,9 @@ export class TestAudioContext extends AudioContext {
 
   createNoize(type) {
     return new NoizeNode(this, type);
+  }
+
+  createDistortion(preset) {
+    return new DistortionNode(this, preset);
   }
 }
