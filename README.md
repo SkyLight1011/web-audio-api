@@ -3,7 +3,11 @@ Playing around with Web Audio API (https://developer.mozilla.org/en-US/docs/Web/
 
 This is just an experiment to build a Synth with Web Audio API
 
-Ideas:
+# Start the static server
+Use `npm start` to run a static server (probably will be updated later to "not-so-static")
+then open `http://localhost:4321/` in browser.
+
+# Ideas
 * Synth (probably modular)
   * Single or multivoice, with variable number of generators
   * Standard `sine`, `triangle`, `sawtooth` and `square` waveforms plus Noize
@@ -15,3 +19,5 @@ Ideas:
 * Sequencer
   * Should have multiple tracks, able to assign a synth to track
   * Should be able to play notes in sequence
+* Server
+  * Add ability to save presets and tunes (describe file format)
