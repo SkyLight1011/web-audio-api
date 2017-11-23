@@ -9,7 +9,7 @@ let mixer = ctx.createMixer();
 let instrument;
 let eq = ctx.createBiquadFilter();
 
-mixer.gain.value = 0.3;
+mixer.gain.value = 0.5;
 mixer.to(ctx.destination);
 
 eq.type = 'lowpass';
@@ -51,6 +51,7 @@ mixer.addFx(eq2, 3);
 let instrumentConfigs = [
   {
     name: 'Bass',
+    description: 'Simple square bass with lowpass filtering and compression',
     preset: {
       voice: {
         osc: [
@@ -77,6 +78,7 @@ let instrumentConfigs = [
   },
   {
     name: 'Power saw',
+    description: 'Mixed (triangle/saw/sine) power lead with pink noize background and a feedback delay effect',
     preset: {
       voice: {
         osc: [
@@ -108,9 +110,10 @@ let instrumentConfigs = [
   },
   {
     name: 'Another lead',
+    description: 'Simple (sine/2x triangle) lead with highpass filter',
     preset: {
       voice: {
-        gain: 0.1,
+        gain: 0.5,
         osc: [
           {type: 'sine', detune: 2400},
           {type: 'triangle', detune: 2400},
@@ -127,6 +130,7 @@ let instrumentConfigs = [
   },
   {
     name: 'Distorted',
+    description: 'Mixed (sine/triangle/saw) wave with distortion effect',
     preset: {
       voice: {
         osc: [
@@ -144,21 +148,25 @@ let instrumentConfigs = [
     }
   }
 ];
-let instruments = instrumentConfigs.map(config => ctx.createInstrument(config));
 let instrumentsContainer = document.querySelector('#instrumentsContainer');
 let selectedInstrument;
 
 mixer.addFx(ctx.createDistortion(), 4);
 
-instruments.forEach((instrument, i) => {
+let instruments = instrumentConfigs.map((config, i) => {
+  let instrument = ctx.createInstrument(config);
+
   seq.assignInstrument(instrument, i + 1);
 
   let btn = document.createElement('button');
   btn.dataset.instrumentNo = i;
   btn.innerText = instrument.name || `Instrument ${i + 1}`;
+  btn.title = config.description;
   btn.onclick = e => selectedInstrument = instrument;
 
   instrumentsContainer.appendChild(btn);
+
+  return instrument;
 });
 
 selectedInstrument = instruments[0];
