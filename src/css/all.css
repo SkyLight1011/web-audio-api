@@ -1,0 +1,8 @@
+.bands {display: flex;}
+.bands .band {flex: none; width: 35px;}
+.band-gain, .band-frequency {font-size: 10px; text-align: center; display: block;}
+
+#peq input.vertical {
+  -webkit-appearance: slider-vertical;
+  width: 20px;
+}

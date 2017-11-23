@@ -39,6 +39,7 @@ seq.assignNote(2,
   [63, 19, 1], [58, 22, 1], [56, 26, 1], [53, 29, 1]
 );
 seq.setVolume(0.5, 2);
+
 mixer.addFx(ctx.createFeedbackDelay(), 2);
 
 let eq2 = ctx.createBiquadFilter();
@@ -163,6 +164,62 @@ instruments.forEach((instrument, i) => {
 selectedInstrument = instruments[0];
 
 console.log('sequencer', seq);
+
+let peq = ctx.createParametricEQ();
+let bandsEl = document.querySelector('.bands');
+
+mixer.cut();
+mixer.to(peq).to(ctx.destination);
+
+for (let band of peq.bands) {
+  let bandEl = document.createElement('div');
+
+  bandEl.className = 'band';
+  bandEl.innerHTML = `
+  <span class="band-gain"></span>
+  <input class="band-gain-input vertical" type="range" value="0" min="-25" max="25">
+  <span class="band-frequency"></span>
+  <input class="band-frequency-input vertical" type="range" value="0" min="0" max="100">
+  `;
+
+  let bandGainEl = bandEl.querySelector('.band-gain');
+  let bandGainInputEl = bandEl.querySelector('.band-gain-input');
+  let bandFrequencyEl = bandEl.querySelector('.band-frequency');
+  let bandFrequencyInputEl = bandEl.querySelector('.band-frequency-input');
+
+  bandGainEl.innerText = `${band.gain.value}db`;
+  bandGainInputEl.value = band.gain.value;
+  bandFrequencyEl.innerText = `${band.frequency.value}Hz`;
+  bandFrequencyInputEl.value = (value => {
+    let minp = 0;
+    let maxp = 100;
+    let minv = Math.log(32);
+    let maxv = Math.log(16000);
+    let scale = (maxv-minv) / (maxp-minp);
+
+    return (Math.log(value)-minv) / scale + minp;
+  })(band.frequency.value);
+
+  bandGainInputEl.addEventListener('input', e => {
+    band.gain.value = +e.target.value;
+    bandGainEl.innerText = `${band.gain.value}db`;
+  });
+
+  bandFrequencyInputEl.addEventListener('input', e => {
+    band.frequency.value = (position => {
+      let minp = 0;
+      let maxp = 100;
+      let minv = Math.log(32);
+      let maxv = Math.log(16000);
+      let scale = (maxv-minv) / (maxp-minp);
+
+      return Math.exp(minv + scale*(position-minp));
+    })(+e.target.value);
+    bandFrequencyEl.innerText = `${Math.round(band.frequency.value)}Hz`;
+  });
+
+  bandsEl.appendChild(bandEl);
+}
 
 document.querySelector('#runGenerator').addEventListener('click', e => {
   let generator = ctx.createGenerator();
