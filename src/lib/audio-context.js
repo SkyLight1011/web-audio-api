@@ -10,6 +10,7 @@ import {FeedbackDelayNode} from './feedback-delay.js';
 import {SequencerNode} from './sequencer.js';
 import {NoizeNode} from './noize.js';
 import {DistortionNode} from './distortion.js';
+import {ParametricEQNode} from './parametric-eq.js';
 
 export class TestAudioContext extends AudioContext {
   constructor() {
@@ -56,5 +57,9 @@ export class TestAudioContext extends AudioContext {
 
   createDistortion(preset) {
     return new DistortionNode(this, preset);
+  }
+
+  createParametricEQ(preset) {
+    return new ParametricEQNode(this, preset);
   }
 }
