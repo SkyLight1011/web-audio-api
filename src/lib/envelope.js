@@ -15,7 +15,9 @@ export class EnvelopeNode extends GainNode {
   }
 
   trigger(at = 0, dur = 0) {
-    let t = this.context.currentTime + at;
+    let t = at || this.context.currentTime;
+
+    this._startTime = t;
 
     this.gain.cancelScheduledValues(t);
     this.gain.setValueAtTime(0, t);
@@ -25,11 +27,21 @@ export class EnvelopeNode extends GainNode {
     dur && this.release(at + dur);
   }
 
-  release(at = 0) {
-    let t = this.context.currentTime + at;
+  release(at = 0, force) {
+    let t = at || this.context.currentTime;
 
+    if (this._released) {
+      return;
+    }
+
+    this._released = true;
     this.gain.cancelScheduledValues(t);
-    this.gain.setValueAtTime(this.gain.value, t);
-    this.gain.linearRampToValueAtTime(0, t + this._preset.release);
+
+    if (force) {
+      this.gain.linearRampToValueAtTime(0, t + 0.001);
+    } else {
+      this.gain.setValueAtTime(this.gain.value, t);
+      this.gain.linearRampToValueAtTime(0, t + this._preset.release);
+    }
   }
 }

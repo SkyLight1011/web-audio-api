@@ -13,7 +13,7 @@ export class InstrumentNode extends GainNode {
 
   play(note, at = 0, dur = 0) {
     if (this._active[note]) {
-      this._active[note].stop(at);
+      this._active[note].stop(at, true);
     }
 
     let voice = this.context.createVoice(note, this._preset.voice);

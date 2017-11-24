@@ -24,12 +24,16 @@ export class GeneratorNode extends GainNode {
   }
 
   start(at = 0, dur = 0) {
-    this._osc.start(this.context.currentTime + at);
+    !at && (at = this.context.currentTime);
+
+    this._osc.start(at);
 
     dur && this.stop(at + dur);
   }
 
   stop(at = 0) {
-    this._osc.stop(this.context.currentTime + at);
+    !at && (at = this.context.currentTime);
+
+    this._osc.stop(at);
   }
 }

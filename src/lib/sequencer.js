@@ -1,3 +1,5 @@
+import {SequencerTrackNode} from './sequencer-track.js';
+
 export class SequencerNode extends GainNode {
   get [Symbol.toStringTag]() {
     return 'SequencerNode';
@@ -21,37 +23,27 @@ export class SequencerNode extends GainNode {
   setBeatUnit(unit) {
     this._unit = unit;
     this._tpb = 1 / this._unit;
+    this._beatInterval = this._interval / this._tpb;
   }
 
   assignInstrument(instrument, trackNo = 1) {
     let track = this.getTrack(trackNo, true);
 
-    track.instrument && track.instrument.cut(track.master);
-
-    track.instrument = instrument;
-    instrument.to(track.master);
-    this._mixer.assignInstrument(track.master, trackNo);
+    track.assignInstrument(instrument);
   }
 
-  assignNote(trackNo, ...notes) {
-    let track = this.getTrack(trackNo);
+  assignNote(trackNo = 1, ...notes) {
+    let track = this.getTrack(trackNo, true);
 
-    if (!track) {
-      return;
-    }
-
-    track.notes = track.notes.concat(notes);
+    track.setNote(...notes);
   }
 
-  getTrack(trackNo, create) {
+  getTrack(trackNo = 1, create) {
     let track = this._tracks[trackNo - 1];
 
     if (!track && create) {
-      track = {
-        instrument: null,
-        master: this.context.createGain(),
-        notes: []
-      };
+      track = new SequencerTrackNode(this.context, this._bpm, this._tpb);
+      this._mixer.assignInstrument(track, trackNo);
 
       this._tracks.push(track);
     }
@@ -60,7 +52,7 @@ export class SequencerNode extends GainNode {
   }
 
   setVolume(volume, trackNo = 1) {
-    this.getTrack(trackNo, true).master.gain.value = volume;
+    this.getTrack(trackNo, true).gain.value = volume;
   }
 
   play(loop = false, trackNo) {
@@ -71,39 +63,7 @@ export class SequencerNode extends GainNode {
     }
 
     for (let track of tracks) {
-      let notes = track.notes.map(note =>
-        [
-          note[0],
-          note[1] * this._interval * this._unit,
-          (note[2] || 0) * this._interval * this._unit
-        ]);
-
-      if (loop) {
-        let sampleLength = 0;
-        let blocks = 0;
-        let loopNotes = notes;
-
-        for (let note of notes) {
-          sampleLength = Math.max(sampleLength, note[1]);
-        }
-
-        blocks = Math.ceil(sampleLength / (this._interval * this._tpb)) * 4;
-
-        for (let i = 0; i++ < 10;) {
-          loopNotes = loopNotes.concat(notes.map(note =>
-            [
-              note[0],
-              note[1] + (this._interval * i * blocks),
-              note[2]
-            ]));
-        }
-
-        notes = loopNotes;
-      }
-
-      for (let note of notes) {
-        track.instrument.play(...note);
-      }
+      track.play(loop);
     }
   }
 
@@ -114,8 +74,8 @@ export class SequencerNode extends GainNode {
       tracks = [tracks[trackNo - 1]];
     }
 
-    for (let {instrument} of tracks) {
-      instrument.stop();
+    for (let track of tracks) {
+      track.stop();
     }
   }
 }

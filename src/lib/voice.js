@@ -22,7 +22,7 @@ export class VoiceNode extends GainNode {
       this._env = this.context.createEnvelope(this._preset.env);
 
       this._env.to(output);
-      this._env.trigger(at, dur);
+      this._env.trigger(at);
 
       output = this._env;
     }
@@ -45,11 +45,11 @@ export class VoiceNode extends GainNode {
     dur && this.stop(at + dur);
   }
 
-  stop(at = 0) {
+  stop(at = 0, force) {
     let t = at + (this._env ? this._preset.env.release : 0);
 
     if (this._env) {
-      this._env.release(at);
+      this._env.release(at, force);
     }
 
     for (let osc of this._osc) {

@@ -35,13 +35,17 @@ export class NoizeNode extends GainNode {
   }
 
   start(at = 0, dur = 0) {
-    this._noizeNode.start(this.context.currentTime + at);
+    !at && (at = this.context.currentTime);
+
+    this._noizeNode.start(at);
 
     dur && this.stop(at + dur);
   }
 
   stop(at = 0) {
-    this._noizeNode.stop(this.context.currentTime + at);
+    !at && (at = this.context.currentTime);
+
+    this._noizeNode.stop(at);
   }
 
   _whiteNoize() {
