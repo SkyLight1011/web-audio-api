@@ -50,6 +50,15 @@ export class VoiceNode extends GainNode {
       output = this._lfoInput;
     }
 
+    let cutoff = this.context.createBiquadFilter();
+    cutoff.type = 'highpass';
+    cutoff.frequency.value = this._preset.cutoff || 20;
+    cutoff.Q.value = 0.5;
+    cutoff.to(output);
+    output = cutoff;
+
+    this.cutoff = cutoff.frequency;
+
     if (this._preset.noize) {
       this._noize = this.context.createNoize(this._preset.noize.type || 'white');
 
