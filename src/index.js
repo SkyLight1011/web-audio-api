@@ -124,6 +124,10 @@ let instrumentConfigs = [
           decay: 2,
           sustain: 0.5,
           release: 0.5
+        },
+        lfo: {
+          frequency: 20,
+          amount: 0.2
         }
       }
     }
@@ -268,7 +272,7 @@ document.addEventListener('keydown', e => {
   console.log(`playing ${note}...`);
   console.log('instrument state', selectedInstrument);
 
-  selectedInstrument.play(note);
+  selectedInstrument.play(note, ctx.currentTime);
 
   active[e.keyCode] = true;
 });
@@ -282,7 +286,7 @@ document.addEventListener('keyup', e => {
 
   console.log(`stopped ${note}`);
 
-  selectedInstrument.stop(note);
+  selectedInstrument.stop(note, ctx.currentTime);
 
   active[e.keyCode] = false;
 });
