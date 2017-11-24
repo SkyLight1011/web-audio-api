@@ -27,6 +27,29 @@ export class VoiceNode extends GainNode {
       output = this._env;
     }
 
+    if (this._preset.lfo) {
+      this._preset.lfo.amount || (this._preset.lfo.amount = 1);
+
+      this._lfo = this.context.createGenerator();
+      this._mod = this.context.createGain();
+      this._modInput = this.context.createGain();
+      this._raw = this.context.createGain();
+      this._lfoInput = this.context.createGain();
+
+      this._modInput.gain.value = this._preset.lfo.amount;
+      this._raw.gain.value = 1 - this._preset.lfo.amount;
+      this._lfo.frequency.value = this._preset.lfo.frequency;
+
+      this._lfoInput.to(this._modInput, this._raw);
+      this._lfo.to(this._mod.gain);
+      this._modInput.to(this._mod).to(output);
+      this._raw.to(output);
+
+      this._lfo.start(at);
+
+      output = this._lfoInput;
+    }
+
     if (this._preset.noize) {
       this._noize = this.context.createNoize(this._preset.noize.type || 'white');
 
@@ -56,6 +79,12 @@ export class VoiceNode extends GainNode {
       osc.stop(t);
 
       osc.onended = () => osc.cut();
+    }
+
+    if (this._lfo) {
+      this._lfo.stop(t);
+
+      this._lfo.onended = () => this._lfo.cut();
     }
 
     if (this._noize) {
