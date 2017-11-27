@@ -150,6 +150,32 @@ let instrumentConfigs = [
         }
       }
     }
+  },
+  {
+    name: 'Square pad',
+    description: 'Pure 5x square wave pad with vibration',
+    preset: {
+      voice: {
+        osc: [
+          {type: 'square', detune: 2400},
+          {type: 'square', detune: -2200},
+          {type: 'square', detune: 2600},
+          {type: 'square', detune: -1900},
+          {type: 'square', detune: 2900}
+        ],
+        gain: 0.1,
+        env: {
+          attack: 0.02,
+          decay: 0.7,
+          sustain: 0,
+          release: 0.5
+        },
+        lfo: {
+          frequency: 10,
+          amount: 0.15
+        }
+      }
+    }
   }
 ];
 let instrumentsContainer = document.querySelector('#instrumentsContainer');
