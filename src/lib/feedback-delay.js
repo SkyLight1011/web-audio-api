@@ -62,7 +62,7 @@ export class FeedbackDelayNode extends GainNode {
       this.to(delay).to(feedback);
 
       if (cutoff) {
-        feedback.to(filter).to(this._output);
+        feedback.to(cutoff).to(this._output);
       } else {
         feedback.to(this._output);
       }
