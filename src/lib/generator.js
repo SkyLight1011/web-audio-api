@@ -3,14 +3,26 @@ export class GeneratorNode extends GainNode {
     return 'GeneratorNode';
   }
 
-  constructor(ctx) {
+  constructor(ctx, preset = {}) {
     super(ctx);
+
+    this._preset = Object.assign({
+      type: 'sine',
+      frequency: 440,
+      detune: 0,
+      gain: 1
+    }, preset);
 
     this._osc = this.context.createOscillator();
 
     for (let key of ['type', 'frequency', 'detune']) {
       this[key] = this._osc[key];
     }
+
+    this.type = this._preset.type;
+    this.frequency.value = this._preset.frequency;
+    this.detune.value = this._preset.detune;
+    this.gain.value = this._preset.gain;
 
     this._osc.to(this);
   }

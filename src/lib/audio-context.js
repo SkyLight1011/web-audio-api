@@ -19,8 +19,8 @@ export class TestAudioContext extends AudioContext {
     console.log('Custom audio context initialized');
   }
 
-  createGenerator() {
-    return new GeneratorNode(this);
+  createGenerator(preset) {
+    return new GeneratorNode(this, preset);
   }
 
   createEnvelope(preset) {
