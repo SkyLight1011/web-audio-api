@@ -40,8 +40,8 @@ seq.assignNote(2,
 );
 seq.setVolume(0.5, 2);
 
-mixer.addFx(ctx.createFeedbackDelay({stereo: 0.5}), 2);
-mixer.addFx(ctx.createFlanger({speed: 1, feedback: 0.05}), 2);
+//mixer.addFx(ctx.createFeedbackDelay({stereo: 0.5}), 2);
+mixer.addFx(ctx.createChorus(), 2);
 
 let eq2 = ctx.createBiquadFilter();
 eq2.type = 'highpass';

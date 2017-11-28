@@ -11,6 +11,7 @@ import {SequencerNode} from './sequencer.js';
 import {NoizeNode} from './noize.js';
 import {DistortionNode} from './distortion.js';
 import {ParametricEQNode} from './parametric-eq.js';
+import {ChorusNode} from './chorus.js';
 import {FlangerNode} from './flanger.js';
 
 export class TestAudioContext extends AudioContext {
@@ -63,6 +64,11 @@ export class TestAudioContext extends AudioContext {
   createParametricEQ(preset) {
     return new ParametricEQNode(this, preset);
   }
+
+  createChorus(preset) {
+    return new ChorusNode(this, preset);
+  }
+
   createFlanger(preset) {
     return new FlangerNode(this, preset);
   }
