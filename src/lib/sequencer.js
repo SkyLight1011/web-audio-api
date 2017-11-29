@@ -1,4 +1,5 @@
 import {SequencerTrackNode} from './sequencer-track.js';
+import {SequencerAutomationTrackNode} from './sequencer-automation-track.js';
 
 export class SequencerNode extends GainNode {
   get [Symbol.toStringTag]() {
@@ -77,5 +78,11 @@ export class SequencerNode extends GainNode {
     for (let track of tracks) {
       track.stop();
     }
+  }
+
+  automate(params, points) {
+    let track = new SequencerAutomationTrackNode(this.context, params, points, this._bpm, this._tpb);
+
+    this._tracks.push(track);
   }
 }

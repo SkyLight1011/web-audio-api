@@ -40,8 +40,9 @@ seq.assignNote(2,
 );
 seq.setVolume(0.5, 2);
 
-//mixer.addFx(ctx.createFeedbackDelay({stereo: 0.5}), 2);
-mixer.addFx(ctx.createChorus(), 2);
+mixer.addFx(ctx.createFeedbackDelay({stereo: 0.5}), 2);
+//mixer.addFx(ctx.createChorus(), 2);
+mixer.setVolume(0.5, 2);
 
 let eq2 = ctx.createBiquadFilter();
 eq2.type = 'highpass';
@@ -177,6 +178,29 @@ let instrumentConfigs = [
         }
       }
     }
+  },
+  {
+    name: '6',
+    description: '',
+    preset: {
+      voice: {
+        osc: [
+          {type: 'sine'},
+          {type: 'sine', detune: -200},
+          {type: 'sine', detune: 200},
+          {type: 'sawtooth', detune: -500},
+          {type: 'sawtooth', detune: 500}
+        ],
+        gain: 0.1,
+        env: {
+          attack: 0.01,
+          decay: 0.1,
+          sustain: 0,
+          release: 0.5
+        },
+        cutoff: 100
+      }
+    }
   }
 ];
 let instrumentsContainer = document.querySelector('#instrumentsContainer');
@@ -199,6 +223,8 @@ let instruments = instrumentConfigs.map((config, i) => {
 
   return instrument;
 });
+
+seq.automate([eq.frequency], [[1, 500, 16], [1, 100, 24], [1, 150, 31]]);
 
 selectedInstrument = instruments[0];
 
