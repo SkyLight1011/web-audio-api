@@ -33,8 +33,8 @@ export class TestAudioContext extends AudioContext {
     return new VoiceNode(this, note, preset);
   }
 
-  createInstrument(config) {
-    return new InstrumentNode(this, config);
+  createInstrument(preset) {
+    return new InstrumentNode(this, preset);
   }
 
   createMixer() {

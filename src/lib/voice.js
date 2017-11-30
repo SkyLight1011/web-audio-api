@@ -80,6 +80,8 @@ export class VoiceNode extends GainNode {
   stop(at = 0, force) {
     let t = at + (this._env ? this._preset.env.release : 0);
 
+    setTimeout(this.onended, t * 1000);
+
     if (this._env) {
       this._env.release(at, force);
     }
@@ -102,6 +104,8 @@ export class VoiceNode extends GainNode {
       this._noize.onended = () => this._noize.cut();
     }
   }
+
+  onended() {}
 
   _setup() {
     let oscIndex = 1;

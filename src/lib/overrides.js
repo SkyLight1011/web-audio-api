@@ -32,4 +32,13 @@ AudioNode.prototype.disconnect = function (target) {
   }
 
   disconnect.call(this, ...arguments);
-}
+};
+
+AudioNode.prototype.connectWith = function (node) {
+  let targets = Array.from(this._targets);
+
+  this.cut();
+  this.to(node);
+
+  targets.map(node.to);
+};
