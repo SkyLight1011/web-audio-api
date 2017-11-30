@@ -1,0 +1,13 @@
+.Slider {display: flex; align-items: center;}
+.Slider--vertical {flex-direction: column;}
+.Slider-label {}
+.Slider--vertical .Slider-label {}
+.Slider-control {}
+.Slider--vertical .Slider-control {
+  display: block;
+  margin: 0 auto;
+  -webkit-appearance: slider-vertical;
+  width: 20px;
+}
+.Slider-value {}
+.Slider--vertical .Slider-value {}

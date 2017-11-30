@@ -1,0 +1,9 @@
+<div class="Slider" ng-class="{'Slider--vertical': $ctrl.vertical}">
+  <label class="Slider-label" ng-if="$ctrl.param.label && !$ctrl.noLabel">{{::$ctrl.param.label}}</label>
+  <input type="range" class="Slider-control"
+    ng-model="$ctrl.value"
+    min="{{$ctrl.min}}"
+    max="{{$ctrl.max}}"
+    step="{{$ctrl.step}}">
+  <span class="Slider-value">{{$ctrl.modelCtrl.$modelValue}}{{$ctrl.param.unit}}</span>
+</div>
