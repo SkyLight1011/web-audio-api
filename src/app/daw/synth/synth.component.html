@@ -1,3 +1,7 @@
 <div class="Synth">
-  <div>Preset: <select ng-model="$ctrl.preset" ng-options="preset as preset.name in $ctrl.presets track by $index" ng-onchange="$ctrl.changePreset($ctrl.preset)"></select></div>
+  <div>Preset: <select ng-model="$ctrl.preset" ng-options="preset as preset.name for preset in $ctrl.presets track by preset.name" ng-change="$ctrl.changePreset($ctrl.preset)"></select></div>
+
+  <fieldset>
+    <legend>Master</legend>
+  </fieldset>
 </div>
