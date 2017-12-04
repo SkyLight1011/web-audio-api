@@ -43,7 +43,7 @@ export class InstrumentNode extends GainNode {
       this._active[note].stop(at);
 
       this._active[note].onended = () => {
-        this._active[note].cut();
+        this._active[note] && this._active[note].cut();
         delete this._active[note];
       };
     }
