@@ -8,7 +8,7 @@ export class BooleanParam extends CommonParam {
   get defaults() {
     return {
       boolean: true,
-      default: true,
+      default: false,
       title: '',
       unit: ''
     }
