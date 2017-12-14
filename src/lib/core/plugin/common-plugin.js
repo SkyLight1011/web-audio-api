@@ -4,6 +4,7 @@ export class CommonPlugin {
   constructor(ctx, preset = {}) {
     this.context = ctx;
     this._params = {};
+    this._output = this.context.createGain();
 
     this.initParams(this.paramConfig);
 

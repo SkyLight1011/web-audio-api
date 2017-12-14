@@ -4,7 +4,7 @@ export class SourcePlugin extends CommonPlugin {
   constructor(ctx, preset = {}) {
     super(ctx, preset);
 
-    this._output = this.context.createGain();
+    this._mount = this.context.createGain();
   }
 
   get paramConfig() {

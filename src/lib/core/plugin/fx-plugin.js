@@ -5,7 +5,6 @@ export class FxPlugin extends CommonPlugin {
     super(ctx, preset);
 
     this._input = this.context.createGain();
-    this._output = this.context.createGain();
     this._fx = this.context.createGain();
     this._raw = this.context.createGain();
 
