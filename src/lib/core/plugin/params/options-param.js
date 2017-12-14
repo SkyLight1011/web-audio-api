@@ -3,6 +3,10 @@ import {CommonParam} from './common-param.js';
 export class OptionsParam extends CommonParam {
   constructor(plugin, options = {}) {
     super(plugin, options);
+
+    if (!this.default && this.default !== null) {
+      this.default = this.options[0];
+    }
   }
 
   get defaults() {
