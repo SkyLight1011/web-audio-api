@@ -285,6 +285,15 @@ document.querySelector('#runGenerator').addEventListener('click', e => {
   generator.to(ctx.destination);
 });
 
+import {TrinityInstrument} from './lib/plugins/trinity/trinity.instrument.js';
+selectedInstrument = new TrinityInstrument(ctx, {
+  master: 0.1,
+  osc1Type: 'square',
+  osc3Detune: -2400,
+  osc3lfo: true,
+});
+selectedInstrument.to(ctx.destination);
+
 document.addEventListener('keydown', e => {
   let note = getNoteByKeyCode(e.keyCode);
 

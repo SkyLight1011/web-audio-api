@@ -44,7 +44,7 @@ AudioNode.prototype.connectWith = function (node) {
 };
 
 AudioParam.prototype.set = function (value, time = 0, type = 0) {
-  let t = this.context.t;
+  let t = 0;//this.context.t;
 
   time = (time < t) ? t : time;
 
