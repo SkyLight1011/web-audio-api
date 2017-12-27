@@ -287,10 +287,18 @@ document.querySelector('#runGenerator').addEventListener('click', e => {
 
 import {TrinityInstrument} from './lib/plugins/trinity/trinity.instrument.js';
 selectedInstrument = new TrinityInstrument(ctx, {
-  master: 0.1,
+  master: 0.2,
+
   osc1Type: 'square',
+
+  osc2Type: 'sawtooth',
+  osc2Detune: 100,
+
   osc3Detune: -2400,
   osc3lfo: true,
+
+  gainEnv: true,
+  gainEnvSustain: 0.5
 });
 selectedInstrument.to(ctx.destination);
 

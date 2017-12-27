@@ -14,6 +14,40 @@ export class SourcePlugin extends Plugin {
 
   get defaults() {
     return Object.assign({}, super.defaults, {
+      gainEnv: {
+        name: 'Gain envelope',
+        boolean: true,
+        default: false
+      },
+      gainEnvAttack: {
+        name: 'Att',
+        unit: 's',
+        min: 0,
+        max: 5,
+        default: 0.005
+      },
+      gainEnvDecay: {
+        name: 'Dec',
+        unit: 's',
+        min: 0,
+        max: 5,
+        default: 0.04
+      },
+      gainEnvSustain: {
+        name: 'Sus',
+        min: 0,
+        max: 1,
+        step: 0.01,
+        default: 0.25
+      },
+      gainEnvRelease: {
+        name: 'Rel',
+        unit: 's',
+        min: 0,
+        max: 10,
+        default: 0.2
+      },
+
       filterType: {
         name: 'Type',
         values: ['lowpass', 'highpass', 'lowshelf', 'highshelf'],

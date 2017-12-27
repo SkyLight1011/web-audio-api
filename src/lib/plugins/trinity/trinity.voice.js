@@ -18,7 +18,7 @@ export class TrinityVoice extends Voice {
 
       let target = (i === 2 && this._plugin.get('osc3lfo'))
         ? this._osc[0].gain
-        : this._output;
+        : this._mount;
       this._osc[i].to(target);
 
       this._osc[i].onended = () => {
@@ -34,12 +34,18 @@ export class TrinityVoice extends Voice {
     for (let osc of this._osc) {
       osc.start(at, dur);
     }
+
+    super.play(at, dur);
   }
 
   stop(at = 0, force) {
+    let minDur = this._plugin.get('gainEnv') && this._plugin.get('gainEnvRelease') || 0;
+
     for (let osc of this._osc) {
-      osc.gain.linearRampToValueAtTime(0, at + 0.01);
-      osc.stop(at + 0.01);
+      osc.gain.set(0, at + minDur + 0.01, 1);
+      osc.stop(at + minDur + 0.01);
     }
+
+    super.stop(at, force);
   }
 }
