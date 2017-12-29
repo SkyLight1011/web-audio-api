@@ -19,10 +19,21 @@ export class Module {
   }
 
   get defaults() {
-    return {};
+    return {
+      master: {
+        name: 'Master',
+        min: 0,
+        max: 1,
+        step: 0.01,
+        default: 1,
+        callback: (value, at, type) => this._output.gain.set(value, at, type)
+      }
+    };
   }
 
-  setup() {}
+  setup() {
+    this._output = this.context.createGain();
+  }
 
   get(name) {
     return this.params[name] && this.params[name].get();

@@ -1,4 +1,5 @@
 import {TestAudioContext} from './audio-context.js';
+import {Sequencer} from './modules/sequencer/sequencer.js';
 import {Mixer} from './modules/mixer/mixer.js';
 import instruments from './plugins/instruments/index.js';
 import fx from './plugins/fx/index.js';
@@ -7,6 +8,7 @@ export class DAW {
   constructor() {
     this.context = new TestAudioContext();
 
+    this.sequencer = new Sequencer(this);
     this.mixer = new Mixer(this);
     this._output = this.context.createGain();
 

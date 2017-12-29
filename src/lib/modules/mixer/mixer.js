@@ -9,30 +9,15 @@ export class Mixer extends Module {
     this._tracks = [];
   }
 
-  get defaults() {
-    return {
-      master: {
-        name: 'Master',
-        min: 0,
-        max: 1,
-        step: 0.01,
-        default: 1,
-        callback: (value, at, type) => this._output.gain.set(value, at, type)
-      }
-    };
-  }
-
-  setup() {
-    this._output = this.context.createGain();
-  }
-
   assign(source, trackNo) {
-    let target = this._output;
+    source.cut();
 
     if (typeof trackNo !== 'undefined') {
       let track = this._getTrack(--trackNo);
 
       track.assign(source);
+    } else {
+      source.to(this._output);
     }
   }
 
