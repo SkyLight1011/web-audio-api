@@ -2,14 +2,8 @@ import {Plugin} from './plugin.js';
 import {Voice} from './source-plugin-voice.js';
 
 export class SourcePlugin extends Plugin {
-  constructor(ctx, preset = {}) {
-    super(ctx, preset);
-
-    this._voices = {};
-    this._filter = this.context.createBiquadFilter();
-
-    this._mount.cut();
-    this._mount.to(this._filter).to(this._output);
+  constructor(...args) {
+    super(...args);
   }
 
   get defaults() {
@@ -59,7 +53,7 @@ export class SourcePlugin extends Plugin {
         unit: 'Hz',
         min: 20,
         max: 2e4,
-        default: 2500,
+        default: 20,
         exponential: true,
         callback: (value, at, type) => this._filter.frequency.set(value, at, type)
       },
@@ -78,6 +72,16 @@ export class SourcePlugin extends Plugin {
         callback: (value, at, type) => this._filter.gain.set(value, at, type)
       }
     });
+  }
+
+  setup() {
+    super.setup();
+
+    this._voices = {};
+    this._mount = this.context.createGain();
+    this._filter = this.context.createBiquadFilter();
+
+    this._mount.to(this._filter).to(this._output);
   }
 
   play(note, at = 0, dur = 0) {

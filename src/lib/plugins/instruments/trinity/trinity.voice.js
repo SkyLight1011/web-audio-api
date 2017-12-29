@@ -1,4 +1,4 @@
-import {Voice} from '../../source-plugin-voice.js';
+import {Voice} from '../../../source-plugin-voice.js';
 
 export class TrinityVoice extends Voice {
   constructor(...args) {

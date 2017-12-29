@@ -7,13 +7,17 @@ export class Plugin {
     this._output = this.context.createGain();
     this.params = {};
 
-    this._mount.to(this._output);
-
     for (let name in this.defaults) {
       this.params[name] = new Param(this.defaults[name]);
     }
 
+    this.setup();
+
     this.preset = preset;
+
+    for (let param in this.preset) {
+      this.set(param, this.preset[param]);
+    }
   }
 
   get defaults() {
@@ -23,15 +27,19 @@ export class Plugin {
         min: 0,
         max: 1,
         step: 0.01,
+        default: 1,
         callback: (value, at, type) => this._output.gain.set(value, at, type)
       },
       mute: {
         name: 'Mute',
         boolean: true,
-        callback: (mute) => this._output.gain.set(mute ? 0 : this.params.get('master'))
+        default: false,
+        callback: (mute) => this._output.gain.set(mute ? 0 : this.get('master'))
       }
     }
   }
+
+  setup() {}
 
   get(name) {
     return this.params[name] && this.params[name].get();
