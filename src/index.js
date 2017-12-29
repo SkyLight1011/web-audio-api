@@ -285,11 +285,10 @@ document.querySelector('#runGenerator').addEventListener('click', e => {
   generator.to(ctx.destination);
 });
 
-import {TrinityInstrument} from './lib/plugins/instruments/trinity/trinity.instrument.js';
-import {DelayFX} from './lib/plugins/fx/delay/delay.fx.js';
-selectedInstrument = new TrinityInstrument(ctx, {
-  master: 0.2,
+import {DAW} from './lib/daw.js';
+let daw = new DAW();
 
+selectedInstrument = daw.createInstrument('trinity', {
   osc1Type: 'square',
 
   osc2Type: 'sawtooth',
@@ -302,9 +301,10 @@ selectedInstrument = new TrinityInstrument(ctx, {
   gainEnvDecay: 0.25,
   gainEnvSustain: 0,
 });
-let delayFX = new DelayFX(ctx);
+let delayFX = daw.createFx('delay');
 
-selectedInstrument.to(delayFX).to(ctx.destination);
+daw._output.gain.value = 0.1;
+selectedInstrument.to(delayFX).to(daw._output);
 
 document.addEventListener('keydown', e => {
   let note = getNoteByKeyCode(e.keyCode);

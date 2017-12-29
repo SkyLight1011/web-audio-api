@@ -6,6 +6,10 @@ export class TrinityInstrument extends InstrumentPlugin {
     super(...args);
   }
 
+  static get id() {
+    return 'trinity';
+  }
+
   get defaults() {
     return Object.assign({}, super.defaults, {
       osc1Type: {

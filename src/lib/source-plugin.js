@@ -6,6 +6,10 @@ export class SourcePlugin extends Plugin {
     super(...args);
   }
 
+  static get id() {
+    return 'source';
+  }
+
   get defaults() {
     return Object.assign({}, super.defaults, {
       gainEnv: {

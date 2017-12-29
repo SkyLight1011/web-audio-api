@@ -5,6 +5,10 @@ export class DelayFX extends FxPlugin {
     super(...args);
   }
 
+  static get id() {
+    return 'delay';
+  }
+
   get defaults() {
     return Object.assign({}, super.defaults, {
       delay: {

@@ -5,6 +5,10 @@ export class FxPlugin extends Plugin {
     super(...args);
   }
 
+  static get id() {
+    return 'fx';
+  }
+
   get defaults() {
     return Object.assign({}, super.defaults, {
       raw: {

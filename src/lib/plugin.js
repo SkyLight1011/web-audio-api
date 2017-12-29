@@ -20,6 +20,10 @@ export class Plugin {
     }
   }
 
+  static get id() {
+    return 'plugin';
+  }
+
   get defaults() {
     return {
       master: {
