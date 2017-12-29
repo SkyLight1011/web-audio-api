@@ -36,8 +36,8 @@ export class Mixer extends Module {
     }
   }
 
-  addFx(name, trackNo) {
-    this._getTrack(--trackNo).addFx(name);
+  addFx(fx, trackNo) {
+    this._getTrack(--trackNo).addFx(fx);
   }
 
   to(...targets) {
