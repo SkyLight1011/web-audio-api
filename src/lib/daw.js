@@ -1,10 +1,13 @@
 import {TestAudioContext} from './audio-context.js';
+import {Mixer} from './modules/mixer/mixer.js';
 import instruments from './plugins/instruments/index.js';
 import fx from './plugins/fx/index.js';
 
 export class DAW {
   constructor() {
     this.context = new TestAudioContext();
+
+    this.mixer = new Mixer(this);
     this._output = this.context.createGain();
 
     this._instruments = instruments.reduce((list, instrument) => {
@@ -18,7 +21,7 @@ export class DAW {
       return list;
     }, {});
 
-    this._output.to(this.context.destination);
+    this.mixer.to(this.context.destination);
   }
 
   createInstrument(name, preset = {}) {

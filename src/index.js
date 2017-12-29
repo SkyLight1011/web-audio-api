@@ -303,8 +303,9 @@ selectedInstrument = daw.createInstrument('trinity', {
 });
 let delayFX = daw.createFx('delay');
 
-daw._output.gain.value = 0.1;
-selectedInstrument.to(delayFX).to(daw._output);
+daw.mixer.assign(selectedInstrument, 1);
+daw.mixer.addFx(delayFX, 1);
+daw.mixer.set('master', 0.1);
 
 document.addEventListener('keydown', e => {
   let note = getNoteByKeyCode(e.keyCode);
