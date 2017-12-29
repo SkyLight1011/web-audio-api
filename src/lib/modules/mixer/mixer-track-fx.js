@@ -17,6 +17,8 @@ export class MixerTrackFXList {
       prevLast.to(fx);
     }
 
+    this._fx.push(fx);
+
     fx.to(this._output);
   }
 
