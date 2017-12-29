@@ -289,7 +289,7 @@ import {DAW} from './lib/daw.js';
 let daw = new DAW();
 
 selectedInstrument = daw.createInstrument('trinity', {
-  osc1Type: 'square',
+  osc1Type: 'sine',
 
   osc2Type: 'sawtooth',
   osc2Detune: 100,
@@ -299,12 +299,14 @@ selectedInstrument = daw.createInstrument('trinity', {
 
   gainEnv: true,
   gainEnvDecay: 0.25,
-  gainEnvSustain: 0,
+  gainEnvSustain: 0.5,
 });
 let delayFX = daw.createFx('delay');
+let reverbFx = daw.createFx('reverb');
 
 daw.mixer.assign(selectedInstrument, 1);
-daw.mixer.addFx(delayFX, 1);
+daw.mixer.addFx(reverbFx, 1);
+//daw.mixer.addFx(delayFX, 1);
 daw.mixer.set('master', 0.1);
 
 document.addEventListener('keydown', e => {
