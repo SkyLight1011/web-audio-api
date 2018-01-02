@@ -48,4 +48,8 @@ export class GeneratorNode extends GainNode {
 
     this._osc.stop(at);
   }
+
+  set onended(callback) {
+    this._osc.onended = callback;
+  }
 }
