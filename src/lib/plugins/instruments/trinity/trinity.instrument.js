@@ -82,6 +82,10 @@ export class TrinityInstrument extends InstrumentPlugin {
     });
   }
 
+  get presets() {
+    return presets;
+  }
+
   createVoice(note) {
     return new TrinityVoice(this, note);
   }

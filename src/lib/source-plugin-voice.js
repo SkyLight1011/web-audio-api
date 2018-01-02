@@ -44,7 +44,6 @@ export class Voice extends Module {
 
   stop(at = 0, force) {
     if (force || this._plugin.get('gainEnv') || this._plugin.get('filterEnv')) {
-      console.log(`cancel`);
       this._mount.gain.cancelScheduledValues(at);
       this._filter.frequency.cancelScheduledValues(at);
     }
