@@ -30,7 +30,6 @@ export class TrinityVoice extends Voice {
   }
 
   play(at = 0, dur = 0) {
-    console.log(this._osc);
     for (let osc of this._osc) {
       osc.start(at, dur);
     }
@@ -39,13 +38,13 @@ export class TrinityVoice extends Voice {
   }
 
   stop(at = 0, force) {
-    let minDur = this._plugin.get('gainEnv') && this._plugin.get('gainEnvRelease') || 0;
+    let minDur = force || (this._plugin.get('gainEnv') && this._plugin.get('gainEnvRelease')) || 0;
 
     for (let osc of this._osc) {
-      osc.gain.set(0, at + minDur + 0.01, 1);
+      this._setParamValue(osc.gain, 0, at + minDur + 0.01, 1);
       osc.stop(at + minDur + 0.01);
     }
 
-    super.stop(at, force);
+    super.stop(at);
   }
 }

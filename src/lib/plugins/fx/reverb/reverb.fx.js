@@ -46,7 +46,7 @@ export class ReverbFX extends FxPlugin {
         max: 5,
         step: 0.01,
         default: 1,
-        callback: (value, at, time) => this._amp.gain.set(value, at, time)
+        callback: (value, at, time) => this._setParamValue(this._amp.gain, value, at, time)
       }
     });
   }

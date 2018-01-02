@@ -26,7 +26,7 @@ export class Module {
         max: 1,
         step: 0.01,
         default: 1,
-        callback: (value, at, type) => this._output.gain.set(value, at, type)
+        callback: (value, at, type) => this._setParamValue(this._output.gain, value, at, type)
       }
     };
   }
@@ -70,6 +70,30 @@ export class Module {
 
     for (let param in preset) {
       this.set(param, preset[param]);
+    }
+  }
+
+  _setParamValue(param, value, at = 0, type = 0) {
+    let dur = 0;
+
+    if (Array.isArray(at)) {
+      [at, dur] = at;
+    }
+
+    at = Math.max(at, this.context.currentTime);
+
+    switch (type) {
+      case 1:
+        param.linearRampToValueAtTime(value, at);
+        break;
+      case 2:
+        param.exponentialRampToValueAtTime(Math.max(value, 0.0001), at);
+        break;
+      case 3:
+        param.setTargetAtTime(Math.max(value, 0.0001), at, dur);
+        break;
+      default:
+        param.setValueAtTime(value, at);
     }
   }
 }

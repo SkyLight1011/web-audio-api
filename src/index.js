@@ -1,11 +1,11 @@
-import {TestAudioContext} from './lib/audio-context.js';
+//import {TestAudioContext} from './lib/audio-context.js';
 
-const ctx = new TestAudioContext;
+//const ctx = new TestAudioContext;
 
 let active = {};
 let octave = 4;
 let keys = [65, 87, 83, 69, 68, 70, 82, 71, 84, 72, 89, 74];
-let mixer = ctx.createMixer();
+/*let mixer = ctx.createMixer();
 let instrument;
 let eq = ctx.createBiquadFilter();
 
@@ -283,23 +283,33 @@ document.querySelector('#runGenerator').addEventListener('click', e => {
 
   generator.start(0, 1);
   generator.to(ctx.destination);
-});
+});*/
 
 import {DAW} from './lib/daw.js';
 let daw = new DAW();
 
-selectedInstrument = daw.createInstrument('trinity', {
+let selectedInstrument = daw.createInstrument('trinity', {
+  master: 0.5,
+
   osc1Type: 'sine',
 
   osc2Type: 'sawtooth',
-  osc2Detune: 100,
+  osc2Detune: 200,
 
   osc3Detune: -2400,
-  osc3lfo: false,
+  osc3lfo: true,
 
   gainEnv: true,
   gainEnvDecay: 0.25,
   gainEnvSustain: 0.5,
+  gainEnvRelease: 1,
+
+  filterEnv: true,
+  filterEnvAmount: 0.25,
+  filterEnvAttack: 0.01,
+  filterEnvDecay: 0.25,
+  filterEnvSustain: 0.1,
+  filterEnvRelease: 1
 });
 let delayFX = daw.createFx('delay');
 let reverbFx = daw.createFx('reverb');
@@ -337,7 +347,7 @@ document.addEventListener('keydown', e => {
   console.log(`playing ${note}...`);
   console.log('instrument state', selectedInstrument);
 
-  selectedInstrument.play(note, ctx.currentTime);
+  selectedInstrument.play(note);
 
   active[e.keyCode] = true;
 });
@@ -351,7 +361,7 @@ document.addEventListener('keyup', e => {
 
   console.log(`stopped ${note}`);
 
-  selectedInstrument.stop(note, ctx.currentTime);
+  selectedInstrument.stop(note);
 
   active[e.keyCode] = false;
 });

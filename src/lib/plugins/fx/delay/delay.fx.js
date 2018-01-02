@@ -18,7 +18,7 @@ export class DelayFX extends FxPlugin {
         max: 5,
         step: 0.05,
         default: 0.25,
-        callback: (value, at, type) => this._delay.delayTime.set(value, at, type)
+        callback: (value, at, type) => this._setParamValue(this._delay.delayTime, value, at, type)
       },
       feedback: {
         name: 'Feedback',
@@ -26,7 +26,7 @@ export class DelayFX extends FxPlugin {
         max: 1,
         step: 0.01,
         default: 0.5,
-        callback: (value, at, type) => this._feedback.gain.set(value, at, type)
+        callback: (value, at, type) => this._setParamValue(this._feedback.gain, value, at, type)
       },
       cutoff: {
         name: 'Cut-off',
@@ -34,7 +34,7 @@ export class DelayFX extends FxPlugin {
         max: 2e4,
         default: 2500,
         exponential: true,
-        callback: (value, at, type) => this._filter.frequency.set(value, at, type)
+        callback: (value, at, type) => this._setParamValue(this._filter.frequency, value, at, type)
       },
       bounce: {
         name: 'Bounce',

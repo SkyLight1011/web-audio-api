@@ -46,6 +46,51 @@ export class SourcePlugin extends Plugin {
         default: 0.2
       },
 
+      filterEnv: {
+        name: 'Filter envelope',
+        boolean: true,
+        default: false
+      },
+      filterEnvReverse: {
+        name: 'Rev',
+        boolean: true,
+        default: false,
+      },
+      filterEnvAmount: {
+        name: 'Amt',
+        min: 0,
+        max: 1,
+        default: 0
+      },
+      filterEnvAttack: {
+        name: 'Att',
+        unit: 's',
+        min: 0,
+        max: 5,
+        default: 0
+      },
+      filterEnvDecay: {
+        name: 'Dec',
+        unit: 's',
+        min: 0,
+        max: 5,
+        default: 0
+      },
+      filterEnvSustain: {
+        name: 'Sus',
+        min: 0,
+        max: 1,
+        step: 0.01,
+        default: 1
+      },
+      filterEnvRelease: {
+        name: 'Rel',
+        unit: 's',
+        min: 0,
+        max: 10,
+        default: 0
+      },
+
       filterType: {
         name: 'Type',
         values: ['lowpass', 'highpass', 'lowshelf', 'highshelf'],
@@ -59,21 +104,21 @@ export class SourcePlugin extends Plugin {
         max: 2e4,
         default: 20,
         exponential: true,
-        callback: (value, at, type) => this._filter.frequency.set(value, at, type)
+        callback: (value, at, type) => this._setParamValue(this._filter.frequency, value, at, type)
       },
       filterQ: {
         name: 'Q',
         min: 0,
         max: 40,
         default: 0,
-        callback: (value, at, type) => this._filter.Q.set(value, at, type)
+        callback: (value, at, type) => this._setParamValue(this._filter.Q, value, at, type)
       },
       filterGain: {
         name: 'Amp',
         min: -40,
         max: 40,
         default: 0,
-        callback: (value, at, type) => this._filter.gain.set(value, at, type)
+        callback: (value, at, type) => this._setParamValue(this._filter.gain, value, at, type)
       }
     });
   }
@@ -89,6 +134,8 @@ export class SourcePlugin extends Plugin {
   }
 
   play(note, at = 0, dur = 0) {
+    !at && (at = this.context.currentTime);
+
     if (this._voices[note]) {
       this._voices[note].stop(at, true);
     }
@@ -112,6 +159,7 @@ export class SourcePlugin extends Plugin {
       this._voices[note].stop(at);
 
       this._voices[note].onended = () => {
+        console.log(`Voice ${note} ended`);
         this._voices[note] && this._voices[note].cut();
         delete this._voices[note];
       };

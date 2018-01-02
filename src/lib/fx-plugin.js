@@ -17,13 +17,13 @@ export class FxPlugin extends Plugin {
         max: 1,
         step: 0.01,
         default: 1,
-        callback: (value, at, type) => this._raw.gain.set(value, at, type)
+        callback: (value, at, type) => this._setParamValue(this._raw.gain, value, at, type)
       },
       pass: {
         name: 'Pass through',
         boolean: true,
         default: false,
-        callback: (value) => this._fx.gain.set(+!value)
+        callback: (value) => this._setParamValue(this._fx.gain, +!value)
       }
     });
   }

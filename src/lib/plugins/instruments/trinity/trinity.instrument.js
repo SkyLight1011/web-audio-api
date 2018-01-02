@@ -1,5 +1,6 @@
 import {InstrumentPlugin} from '../../../instrument-plugin.js';
 import {TrinityVoice} from './trinity.voice.js';
+import presets from './presets.js';
 
 export class TrinityInstrument extends InstrumentPlugin {
   constructor(...args) {

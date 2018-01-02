@@ -42,32 +42,3 @@ AudioNode.prototype.connectWith = function (node) {
 
   targets.map(node.to);
 };
-
-AudioParam.prototype.set = function (value, time = 0, type = 0) {
-  let t = 0;//this.context.t;
-  let dur = 0;
-
-  if (Array.isArray(time)) {
-    [time, dur] = time;
-  }
-
-  time = (time < t) ? t : time;
-
-  switch (type) {
-    case 1:
-      this.linearRampToValueAtTime(value, time);
-      break;
-    case 2:
-      this.exponentialRampToValueAtTime(Math.max(value, 0.0001), time);
-      break;
-    case 3:
-      this.setTargetAtTime(Math.max(value, 0.0001), time, dur);
-      break;
-    default:
-      this.setValueAtTime(value, time);
-
-      if (time <= t && value !== this.value) {
-        this.value = value;
-      }
-  }
-}

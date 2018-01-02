@@ -14,7 +14,7 @@ export class SequencerTrack extends Module {
         min: -1,
         max: 1,
         default: 0,
-        callback: (value, at, type) => this._panner.pan.set(value, at, type)
+        callback: (value, at, type) => this._setParamValue(this._panner.pan, value, at, type)
       }
     });
   }
