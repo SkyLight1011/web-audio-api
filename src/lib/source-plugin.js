@@ -147,6 +147,8 @@ export class SourcePlugin extends Plugin {
   }
 
   stop(note, at = 0) {
+    !at && (at = this.context.currentTime);
+
     if (!note) {
       for (let note in this._voices) {
         this.stop(note);
