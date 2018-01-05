@@ -134,38 +134,25 @@ export class SourcePlugin extends Plugin {
   }
 
   play(note, at = 0, dur = 0) {
-    !at && (at = this.context.currentTime);
-
     if (this._voices[note]) {
-      this._voices[note].stop(at, true);
+      this._voices[note].stop(at);
     }
 
     let voice = this._voices[note] = this.createVoice(note);
 
     voice.to(this._mount);
-    voice.play(at, dur);
+    voice.play(at);
   }
 
   stop(note, at = 0) {
-    !at && (at = this.context.currentTime);
+    let voice = this._voices[note];
 
-    if (!note) {
-      for (let note in this._voices) {
-        this.stop(note);
-      }
-
-      return;
+    if (voice) {
+      voice.stop(at);
+      voice.onended = () => voice.cut();
     }
 
-    if (this._voices[note]) {
-      this._voices[note].stop(at);
-
-      this._voices[note].onended = () => {
-        console.log(`Voice ${note} ended`);
-        this._voices[note] && this._voices[note].cut();
-        delete this._voices[note];
-      };
-    }
+    delete this._voices[note];
   }
 
   createVoice(note) {
