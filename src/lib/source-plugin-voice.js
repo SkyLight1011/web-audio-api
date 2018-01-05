@@ -60,7 +60,7 @@ export class Voice extends Module {
     }
   }
 
-  stop(at = 0, force) {
+  stop(at = 0) {
     for (let env of this._env) {
       env.release(at);
     }

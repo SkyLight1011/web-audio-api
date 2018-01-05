@@ -134,6 +134,8 @@ export class SourcePlugin extends Plugin {
   }
 
   play(note, at = 0, dur = 0) {
+    !at && (at = this.context.currentTime);
+
     if (this._voices[note]) {
       this._voices[note].stop(at);
     }
@@ -142,10 +144,14 @@ export class SourcePlugin extends Plugin {
 
     voice.to(this._mount);
     voice.play(at);
+
+    dur && this.stop(note, at + dur);
   }
 
   stop(note, at = 0) {
     let voice = this._voices[note];
+
+    !at && (at = this.context.currentTime);
 
     if (voice) {
       voice.stop(at);

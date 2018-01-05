@@ -66,7 +66,7 @@ document.addEventListener('keydown', e => {
   console.log(`playing ${note}...`);
   console.log('instrument state', selectedInstrument);
 
-  selectedInstrument.play(note, daw.context.currentTime);
+  selectedInstrument.play(note);
 
   active[e.keyCode] = true;
 });
@@ -80,7 +80,7 @@ document.addEventListener('keyup', e => {
 
   console.log(`stopped ${note}`);
 
-  selectedInstrument.stop(note, daw.context.currentTime);
+  selectedInstrument.stop(note);
 
   active[e.keyCode] = false;
 });
