@@ -12,10 +12,6 @@ export class Module {
     this.setup();
 
     this.preset = preset;
-
-    for (let param in this.preset) {
-      this.set(param, this.preset[param]);
-    }
   }
 
   get defaults() {
@@ -68,8 +64,10 @@ export class Module {
       return;
     }
 
-    for (let param in preset) {
-      this.set(param, preset[param]);
+    this._preset = preset;
+
+    for (let param in this.params) {
+      this.set(param, this._preset[param]);
     }
   }
 

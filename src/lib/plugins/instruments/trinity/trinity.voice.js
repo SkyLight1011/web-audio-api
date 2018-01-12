@@ -9,12 +9,21 @@ export class TrinityVoice extends Voice {
     this._osc = [];
 
     for (let i = 0; i < 3; i++) {
-      this._osc[i] = this.context.createGenerator({
-        type: this._plugin.get(`osc${i + 1}Type`),
-        frequency: this.frequency,
-        detune: this._plugin.get(`osc${i + 1}Detune`),
-        gain: this._plugin.get(`osc${i + 1}Gain`)
-      });
+      let type = this._plugin.get(`osc${i + 1}Type`);
+      let gain = this._plugin.get(`osc${i + 1}Gain`);
+      let isNoize = ['pink', 'white'].indexOf(type) > -1;
+
+      if (!isNoize) {
+        this._osc[i] = this.context.createGenerator({
+          type,
+          frequency: this.frequency,
+          detune: this._plugin.get(`osc${i + 1}Detune`),
+          gain
+        });
+      } else {
+        this._osc[i] = this.context.createNoize(type);
+        this._osc[i].gain.value = gain;
+      }
 
       let target = (i === 2 && this._plugin.get('osc3lfo'))
         ? this._osc[0].gain

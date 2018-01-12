@@ -46,7 +46,13 @@ export class NoizeNode extends GainNode {
     !at && (at = this.context.currentTime);
 
     this._noizeNode.stop(at);
+
+    this._noizeNode.onended = () => {
+      this.onended();
+    };
   }
+
+  onended() {}
 
   _whiteNoize() {
     let bufferSize = 2 * this.context.sampleRate;

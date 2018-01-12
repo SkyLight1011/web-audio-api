@@ -7,36 +7,16 @@ let keys = [65, 87, 83, 69, 68, 70, 82, 71, 84, 72, 89, 74];
 import {DAW} from './lib/daw.js';
 let daw = new DAW();
 
-let selectedInstrument = daw.createInstrument('trinity', {
-  master: 0.5,
-
-  osc1Type: 'sine',
-
-  osc2Type: 'sawtooth',
-  osc2Detune: 200,
-
-  osc3Detune: -2400,
-  osc3lfo: true,
-
-  gainEnv: true,
-  gainEnvDecay: 0.25,
-  gainEnvSustain: 0.25,
-  gainEnvRelease: 0.2,
-
-  filterEnv: true,
-  filterEnvAmount: 0.25,
-  filterEnvAttack: 0.01,
-  filterEnvDecay: 0.25,
-  filterEnvSustain: 0.1,
-  filterEnvRelease: 1
-});
+let selectedInstrument = daw.createInstrument('trinity');
 let delayFX = daw.createFx('delay');
 let reverbFx = daw.createFx('reverb');
+
+selectedInstrument.applyPreset(3);
 
 daw.mixer.assign(selectedInstrument, 1);
 daw.mixer.addFx(reverbFx, 1);
 //daw.mixer.addFx(delayFX, 1);
-daw.mixer.set('master', 0.5);
+daw.mixer.set('master', 0.3);
 
 document.addEventListener('keydown', e => {
   let note = getNoteByKeyCode(e.keyCode);

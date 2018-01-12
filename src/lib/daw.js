@@ -26,7 +26,7 @@ export class DAW {
     this.mixer.to(this.context.destination);
   }
 
-  createInstrument(name, preset = {}) {
+  createInstrument(name, preset) {
     let Instrument = this._instruments[name];
 
     if (!Instrument) {

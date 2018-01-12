@@ -1,6 +1,8 @@
 import {InstrumentPlugin} from '../../../instrument-plugin.js';
 import {TrinityVoice} from './trinity.voice.js';
-import presets from './presets.js';
+import presets from './trinity.presets.js';
+
+const WAVE_TYPES = ['sine', 'triangle', 'sawtooth', 'square', 'pink', 'white'];
 
 export class TrinityInstrument extends InstrumentPlugin {
   constructor(...args) {
@@ -15,7 +17,7 @@ export class TrinityInstrument extends InstrumentPlugin {
     return Object.assign({}, super.defaults, {
       osc1Type: {
         name: 'Type',
-        values: ['sine', 'triangle', 'sawtooth', 'square'],
+        values: WAVE_TYPES,
         default: 'sine'
       },
       osc1Detune: {
@@ -35,7 +37,7 @@ export class TrinityInstrument extends InstrumentPlugin {
       },
       osc2Type: {
         name: 'Type',
-        values: ['sine', 'triangle', 'sawtooth', 'square'],
+        values: WAVE_TYPES,
         default: 'sine'
       },
       osc2Detune: {
@@ -55,7 +57,7 @@ export class TrinityInstrument extends InstrumentPlugin {
       },
       osc3Type: {
         name: 'Type',
-        values: ['sine', 'triangle', 'sawtooth', 'square'],
+        values: WAVE_TYPES,
         default: 'sine'
       },
       osc3Detune: {
