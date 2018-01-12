@@ -11,6 +11,7 @@ let selectedInstrument = daw.createInstrument('trinity');
 let reverbFx = daw.createFx('reverb');
 let flanger = daw.createFx('flanger');
 
+selectedInstrument.applyPreset(2);
 
 daw.mixer.assign(selectedInstrument, 1);
 daw.mixer.addFx(reverbFx, 1);

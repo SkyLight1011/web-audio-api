@@ -1,6 +1,8 @@
 import {Plugin} from './plugin.js';
 import {Voice} from './source-plugin-voice.js';
 
+const WAVE_TYPES = ['sine', 'triangle', 'sawtooth', 'square'];
+
 export class SourcePlugin extends Plugin {
   constructor(...args) {
     super(...args);
@@ -44,6 +46,31 @@ export class SourcePlugin extends Plugin {
         min: 0,
         max: 10,
         default: 0.2
+      },
+
+      gainLFO: {
+        name: 'Gain LFO',
+        min: 0,
+        max: 1,
+        default: 0
+      },
+      gainLFOType: {
+        name: 'Type',
+        values: WAVE_TYPES,
+        default: 'sine'
+      },
+      gainLFODelay: {
+        name: 'Delay',
+        min: 0,
+        max: 5,
+        default: 0.5
+      },
+      gainLFOSpeed: {
+        name: 'Speed',
+        unit: 'Hz',
+        min: 0,
+        max: 50,
+        default: 5
       },
 
       filterEnv: {

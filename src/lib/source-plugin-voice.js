@@ -1,5 +1,6 @@
 import {Module} from './module.js';
 import {Envelope} from './source-plugin-envelope.js';
+import {LFO} from './source-plugin-lfo.js';
 
 export class Voice extends Module {
   constructor(plugin, note) {
@@ -8,21 +9,29 @@ export class Voice extends Module {
     this._plugin = plugin;
     this._note = note;
     this._mount = this.context.createGain();
+    this._velocity = this.context.createGain();
+    this._gainEnv = this.context.createGain();
     this._filter = this.context.createBiquadFilter();
     this._output = this.context.createGain();
     this._env = [];
+    this._lfo = [];
 
     this._filter.type = 'lowpass';
 
+    this._mount
+      .to(this._velocity)
+      .to(this._gainEnv);
+
     if (this._plugin.get('filterEnv')) {
-      this._mount
+      this._gainEnv
         .to(this._filter)
         .to(this._output);
     } else {
-      this._mount.to(this._output);
+      this._gainEnv
+        .to(this._output);
     }
 
-    this.addEnvelope(this._mount.gain, {
+    this.addEnvelope(this._gainEnv.gain, {
       enabled: 'gainEnv',
       delay: 'gainEnvDelay',
       attack: 'gainEnvAttack',
@@ -44,6 +53,15 @@ export class Voice extends Module {
       release: 'filterEnvRelease',
       amount: 'filterEnvAmount'
     });
+
+    if (this._plugin.get('gainLFO')) {
+      this.addLFO(this._velocity.gain, {
+        amount: this._plugin.get('gainLFO'),
+        type: this._plugin.get('gainLFOType'),
+        speed: this._plugin.get('gainLFOSpeed'),
+        delay: this._plugin.get('gainLFODelay')
+      });
+    }
   }
 
   get frequency() {
@@ -54,15 +72,31 @@ export class Voice extends Module {
     this._env.push(new Envelope(this._plugin, param, preset));
   }
 
+  addLFO(param, preset = {}) {
+    let lfo = new LFO(this._plugin, preset);
+
+    lfo.to(param);
+
+    this._lfo.push(lfo);
+  }
+
   play(at = 0, dur = 0) {
     for (let env of this._env) {
       env.trigger(at);
+    }
+
+    for (let lfo of this._lfo) {
+      lfo.start(at);
     }
   }
 
   stop(at = 0) {
     for (let env of this._env) {
       env.release(at);
+    }
+
+    for (let lfo of this._lfo) {
+      lfo.stop(at + 5);
     }
   }
 
