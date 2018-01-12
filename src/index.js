@@ -8,14 +8,13 @@ import {DAW} from './lib/daw.js';
 let daw = new DAW();
 
 let selectedInstrument = daw.createInstrument('trinity');
-let delayFX = daw.createFx('delay');
 let reverbFx = daw.createFx('reverb');
+let flanger = daw.createFx('flanger');
 
-selectedInstrument.applyPreset(3);
 
 daw.mixer.assign(selectedInstrument, 1);
 daw.mixer.addFx(reverbFx, 1);
-//daw.mixer.addFx(delayFX, 1);
+//daw.mixer.addFx(flanger, 1);
 daw.mixer.set('master', 0.3);
 
 document.addEventListener('keydown', e => {
