@@ -68,20 +68,24 @@ export default [
     id: 'bass',
     name: 'Bass',
     preset: {
-      master: 0.1,
+      master: 0.3,
 
       osc1Type: 'square',
+      osc1Detune: -1200,
 
       osc2Type: 'square',
-      detune: 700,
+      osc2Detune: -500,
 
       osc3Type: 'square',
-      detune: 1200,
+      osc3Detune: 0,
 
       gainEnv: true,
       gainEnvAttack: 0.01,
       gainEnvSustain: 1,
-      gainEnvRelease: 0.2
+      gainEnvRelease: 0.2,
+
+      filterType: 'lowpass',
+      filterCutoff: 500
     }
   }
 ];
