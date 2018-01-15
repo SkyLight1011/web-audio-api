@@ -1,5 +1,5 @@
 export class LFO {
-  constructor(plugin, preset = {}) {
+  constructor(plugin, param, preset = {}) {
     this.context = plugin.context;
 
     this._preset = preset;
@@ -8,6 +8,8 @@ export class LFO {
       frequency: this._preset.speed,
       gain: this._preset.amount
     });
+
+    this._osc.to(param);
   }
 
   start(at) {

@@ -73,11 +73,7 @@ export class Voice extends Module {
   }
 
   addLFO(param, preset = {}) {
-    let lfo = new LFO(this._plugin, preset);
-
-    lfo.to(param);
-
-    this._lfo.push(lfo);
+    this._lfo.push(new LFO(this._plugin, param, preset));
   }
 
   play(at = 0, dur = 0) {
