@@ -22,14 +22,14 @@ export class SourcePlugin extends Plugin {
       gainEnvAttack: {
         name: 'Att',
         unit: 's',
-        min: 0,
+        min: 0.001,
         max: 5,
         default: 0.005
       },
       gainEnvDecay: {
         name: 'Dec',
         unit: 's',
-        min: 0,
+        min: 0.001,
         max: 5,
         default: 0.04
       },
@@ -43,7 +43,7 @@ export class SourcePlugin extends Plugin {
       gainEnvRelease: {
         name: 'Rel',
         unit: 's',
-        min: 0,
+        min: 0.001,
         max: 10,
         default: 0.2
       },
@@ -89,18 +89,32 @@ export class SourcePlugin extends Plugin {
         max: 1,
         default: 0
       },
+      filterEnvDelay: {
+        name: 'Delay',
+        unit: 's',
+        min: 0,
+        max: 5,
+        default: 0
+      },
       filterEnvAttack: {
         name: 'Att',
         unit: 's',
-        min: 0,
+        min: 0.001,
         max: 5,
         default: 0
       },
       filterEnvDecay: {
         name: 'Dec',
         unit: 's',
-        min: 0,
+        min: 0.001,
         max: 5,
+        default: 0
+      },
+      filterEnvHold: {
+        name: 'Hold',
+        unit: 's',
+        min: 0,
+        max: 10,
         default: 0
       },
       filterEnvSustain: {
@@ -113,7 +127,7 @@ export class SourcePlugin extends Plugin {
       filterEnvRelease: {
         name: 'Rel',
         unit: 's',
-        min: 0,
+        min: 0.001,
         max: 10,
         default: 0
       },
