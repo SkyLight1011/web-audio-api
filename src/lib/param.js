@@ -15,11 +15,19 @@ export class Param {
       }
     }
 
-    !this.value && (this.value = this.default);
+    this._value = this.default;
+  }
+
+  get value() {
+    return this._value;
+  }
+
+  set value(value) {
+    this.set(value);
   }
 
   get() {
-    return this.value;
+    return this._value;
   }
 
   set(value, at, type) {
@@ -28,17 +36,17 @@ export class Param {
     }
 
     if (this.boolean) {
-      this.value = !!value;
+      this._value = !!value;
     } else if (this.values) {
       if (this.values.indexOf(value) > -1) {
-        this.value = value;
+        this._value = value;
       } else {
         throw new Error(`Invalid value ${value}`);
       }
     } else {
-      this.value = Math.min(Math.max(value, this.min), this.max);
+      this._value = Math.min(Math.max(value, this.min), this.max);
     }
 
-    this.callback && this.callback(this.value, at, type);
+    this.callback && this.callback(this._value, at, type);
   }
 }
