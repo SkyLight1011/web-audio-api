@@ -10,6 +10,7 @@ export class SliderComponentController {
     this.min = (this.param.exponential || !this.param.min) ? 0 : this.param.min;
     this.max = (this.param.exponential || !this.param.max) ? 1 : this.param.max;
     this.step = (this.param.exponential || !this.param.step) ? (this.max - this.min) / 100 : this.param.step;
+    this.label = this.param.name;
 
     this.control.on('mousewheel', e => this.incrementValue(this.step * -Math.sign(e.deltaY)));
     this.control.on('input', e => this.updateValue(e.target.value));

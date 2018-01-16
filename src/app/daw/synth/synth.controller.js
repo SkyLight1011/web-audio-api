@@ -1,18 +1,55 @@
+const keys = [65, 87, 83, 69, 68, 70, 82, 71, 84, 72, 89, 74];
+
 export class SynthComponentController {
-  constructor(DAWService) {
+  constructor($document, DAWService) {
+    this.$doc = $document;
     this.daw = DAWService;
-    this.presets = this.daw.getPresets();
-    this.preset = this.presets[0];
-    this.instrument = this.daw.createInstrument(this.preset);
 
-    this.daw.sequencer.assignInstrument(this.instrument, 1);
+    this.octave = 4;
+    this.instrument = this.daw.createInstrument('trinity');
+    this.active = {};
   }
 
-  changePreset(preset) {
-    this.instrument.setPreset(preset);
+  $onInit() {
+    this.$doc.on('keydown', e => this._trigger(e.keyCode));
+    this.$doc.on('keyup', e => this._release(e.keyCode));
   }
 
-  toggleFilter(filter) {
-    filter.gain.value = filter.gain.value > 0 ? 0 : 1;
+  _trigger(key) {
+    let note = this._getNoteByKeyCode(key);
+
+    if (this.active[key]) {
+      return;
+    }
+
+    if (key === 107) {
+      this.octave++;
+    } else if (key === 109) {
+      this.octave--;
+    }
+
+    if (!note) {
+      return;
+    }
+
+    this.instrument.play(note);
+
+    this.active[key] = true;
+  }
+
+  _release(key) {
+    let note = this._getNoteByKeyCode(key);
+
+    if (!this.active[key] || !note) {
+      return;
+    }
+
+    this.instrument.stop(note);
+
+    this.active[key] = false;
+  }
+
+  _getNoteByKeyCode(keyCode) {
+    return keys.includes(keyCode) ? this.octave * 12 + (keys.indexOf(keyCode) - 9) : null;
   }
 }

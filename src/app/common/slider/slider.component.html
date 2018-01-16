@@ -1,5 +1,5 @@
 <div class="Slider" ng-class="{'Slider--vertical': $ctrl.vertical}">
-  <label class="Slider-label" ng-if="$ctrl.param.label && !$ctrl.noLabel">{{::$ctrl.param.label}}</label>
+  <label class="Slider-label" ng-if="$ctrl.label && !$ctrl.noLabel">{{::$ctrl.label}}</label>
   <input type="range" class="Slider-control"
     ng-model="$ctrl.value"
     min="{{$ctrl.min}}"

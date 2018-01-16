@@ -1,7 +1,49 @@
 <div class="Synth">
-  <div>Preset: <select ng-model="$ctrl.preset" ng-options="preset as preset.name for preset in $ctrl.presets track by preset.name" ng-change="$ctrl.changePreset($ctrl.preset)"></select></div>
+  <fieldset>
+    <legend>General</legend>
+
+    <slider param="$ctrl.instrument.params.master" ng-model="$ctrl.instrument.params.master.value"></slider>
+    <label><input type="checkbox" ng-model="$ctrl.instrument.params.mute.value"> Mute</label>
+  </fieldset>
 
   <fieldset>
-    <legend>Master</legend>
+    <legend>Plugin</legend>
+  </fieldset>
+
+  <fieldset>
+    <legend>Filter</legend>
+
+    <label>Type</label>
+    <select ng-model="$ctrl.instrument.params.filterType.value" ng-options="item for item in $ctrl.instrument.params.filterType.values"></select>
+    <slider param="$ctrl.instrument.params.filterCutoff" ng-model="$ctrl.instrument.params.filterCutoff.value"></slider>
+    <slider param="$ctrl.instrument.params.filterGain" ng-model="$ctrl.instrument.params.filterGain.value"></slider>
+    <slider param="$ctrl.instrument.params.filterQ" ng-model="$ctrl.instrument.params.filterQ.value"></slider>
+  </fieldset>
+
+  <fieldset>
+    <legend>Envelopes</legend>
+
+    <fieldset>
+      <legend>Gain</legend>
+
+      <label><input type="checkbox" ng-model="$ctrl.instrument.params.gainEnv.value"> Enable</label>
+      <slider param="$ctrl.instrument.params.gainEnvAttack" ng-model="$ctrl.instrument.params.gainEnvAttack.value"></slider>
+      <slider param="$ctrl.instrument.params.gainEnvDecay" ng-model="$ctrl.instrument.params.gainEnvDecay.value"></slider>
+      <slider param="$ctrl.instrument.params.gainEnvSustain" ng-model="$ctrl.instrument.params.gainEnvSustain.value"></slider>
+      <slider param="$ctrl.instrument.params.gainEnvRelease" ng-model="$ctrl.instrument.params.gainEnvRelease.value"></slider>
+    </fieldset>
+
+    <fieldset>
+      <legend>Filter</legend>
+
+      <label><input type="checkbox" ng-model="$ctrl.instrument.params.filterEnv.value"> Enable</label>
+      <slider param="$ctrl.instrument.params.filterEnvAmount" ng-model="$ctrl.instrument.params.filterEnvAmount.value"></slider>
+      <slider param="$ctrl.instrument.params.filterEnvDelay" ng-model="$ctrl.instrument.params.filterEnvDelay.value"></slider>
+      <slider param="$ctrl.instrument.params.filterEnvAttack" ng-model="$ctrl.instrument.params.filterEnvAttack.value"></slider>
+      <slider param="$ctrl.instrument.params.filterEnvHold" ng-model="$ctrl.instrument.params.filterEnvHold.value"></slider>
+      <slider param="$ctrl.instrument.params.filterEnvDecay" ng-model="$ctrl.instrument.params.filterEnvDecay.value"></slider>
+      <slider param="$ctrl.instrument.params.filterEnvSustain" ng-model="$ctrl.instrument.params.filterEnvSustain.value"></slider>
+      <slider param="$ctrl.instrument.params.filterEnvRelease" ng-model="$ctrl.instrument.params.filterEnvRelease.value"></slider>
+    </fieldset>
   </fieldset>
 </div>

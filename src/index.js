@@ -18,7 +18,7 @@ daw.mixer.addFx(reverbFx, 1);
 //daw.mixer.addFx(flanger, 1);
 daw.mixer.set('master', 0.3);
 
-document.addEventListener('keydown', e => {
+/*document.addEventListener('keydown', e => {
   let note = getNoteByKeyCode(e.keyCode);
 
   if (active[e.keyCode]) {
@@ -63,7 +63,7 @@ document.addEventListener('keyup', e => {
   selectedInstrument.stop(note);
 
   active[e.keyCode] = false;
-});
+});*/
 
 function getNoteByKeyCode(keyCode) {
   return keys.includes(keyCode) ? octave * 12 + (keys.indexOf(keyCode) - 9) : null;

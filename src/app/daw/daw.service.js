@@ -1,19 +1,19 @@
-import {TestAudioContext} from '../../lib/audio-context.js';
-import presets from './presets.js';
-
-const ctx = new TestAudioContext;
+import {DAW} from '../../lib/daw.js';
 
 export class DAWService {
   constructor() {
-    this.mixer = ctx.createMixer();
-    this.sequencer = ctx.createSequencer(this.mixer);
+    this.daw = new DAW();
   }
 
-  createInstrument() {
-    return ctx.createInstrument();
+  createInstrument(id) {
+    let instrument = this.daw.createInstrument(id);
+
+    this.daw.mixer.assign(instrument, 1);
+
+    return instrument;
   }
 
-  getPresets() {
-    return presets;
+  getMixer() {
+    return this.daw.mixer;
   }
 }
