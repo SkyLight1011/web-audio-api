@@ -1,0 +1,8 @@
+<fieldset ng-repeat="i in [1, 2, 3]">
+  <legend>OSC {{::i}}</legend>
+
+  <select ng-options="item for item in $ctrl.instrument.params['osc' + i + 'Type']" ng-model="$ctrl.instrument.params['osc' + i + 'Type'].value"></select>
+  <slider param="$ctrl.instrument.params['osc' + i + 'Detune']" ng-model="$ctrl.instrument.params['osc' + i + 'Detune'].value"></slider>
+  <slider param="$ctrl.instrument.params['osc' + i + 'Gain']" ng-model="$ctrl.instrument.params['osc' + i + 'Gain'].value"></slider>
+  <label ng-if="i === 3"><input type="checkbox" ng-model="$ctrl.instrument.params.osc3lfo.value"> LFO for OSC1 Gain</label>
+</fieldset>

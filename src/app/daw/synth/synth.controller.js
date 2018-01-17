@@ -7,6 +7,7 @@ export class SynthComponentController {
 
     this.octave = 4;
     this.instrument = this.daw.createInstrument('trinity');
+    this.instrumentId = this.instrument.__proto__.constructor.id;
     this.active = {};
   }
 

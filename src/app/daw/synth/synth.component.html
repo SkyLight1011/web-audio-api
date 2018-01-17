@@ -8,6 +8,10 @@
 
   <fieldset>
     <legend>Plugin</legend>
+
+    <div ng-switch="$ctrl.instrumentId">
+      <synth-trinity ng-switch-when="trinity" instrument="$ctrl.instrument"></synth-trinity>
+    </div>
   </fieldset>
 
   <fieldset>
