@@ -4,6 +4,10 @@
 
     <slider param="$ctrl.instrument.params.master" ng-model="$ctrl.instrument.params.master.value"></slider>
     <label><input type="checkbox" ng-model="$ctrl.instrument.params.mute.value"> Mute</label>
+    <div>
+      <label>Preset</label>
+      <select ng-model="$ctrl.preset" ng-options="preset.name for preset in $ctrl.instrument.presets track by preset.id" ng-change="$ctrl.updatePreset($ctrl.preset)"></select>
+    </div>
   </fieldset>
 
   <fieldset>

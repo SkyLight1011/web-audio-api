@@ -8,12 +8,17 @@ export class SynthComponentController {
     this.octave = 4;
     this.instrument = this.daw.createInstrument('trinity');
     this.instrumentId = this.instrument.__proto__.constructor.id;
+    this.preset = this.instrument.preset.id;
     this.active = {};
   }
 
   $onInit() {
     this.$doc.on('keydown', e => this._trigger(e.keyCode));
     this.$doc.on('keyup', e => this._release(e.keyCode));
+  }
+
+  updatePreset(value) {
+    this.instrument.preset = value.preset;
   }
 
   _trigger(key) {
