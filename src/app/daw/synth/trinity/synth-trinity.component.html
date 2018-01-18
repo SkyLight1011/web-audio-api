@@ -2,6 +2,7 @@
   <legend>OSC {{::i}}</legend>
 
   <select ng-options="item for item in $ctrl.instrument.params['osc' + i + 'Type'].values track by item" ng-model="$ctrl.instrument.params['osc' + i + 'Type'].value"></select>
+  <slider param="$ctrl.instrument.params['osc' + i + 'CoarseDetune']" ng-model="$ctrl.instrument.params['osc' + i + 'CoarseDetune'].value"></slider>
   <slider param="$ctrl.instrument.params['osc' + i + 'Detune']" ng-model="$ctrl.instrument.params['osc' + i + 'Detune'].value"></slider>
   <slider param="$ctrl.instrument.params['osc' + i + 'Gain']" ng-model="$ctrl.instrument.params['osc' + i + 'Gain'].value"></slider>
 

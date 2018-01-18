@@ -28,6 +28,14 @@ export class TrinityInstrument extends InstrumentPlugin {
         step: 100,
         default: 0
       },
+      osc1CoarseDetune: {
+        name: 'CD',
+        unit: '',
+        min: 0.9,
+        max: 1.1,
+        step: 0.01,
+        default: 1
+      },
       osc1Gain: {
         name: 'Gain',
         min: 0,
@@ -48,6 +56,14 @@ export class TrinityInstrument extends InstrumentPlugin {
         step: 100,
         default: 0
       },
+      osc2CoarseDetune: {
+        name: 'CD',
+        unit: '',
+        min: 0.9,
+        max: 1.1,
+        step: 0.01,
+        default: 1
+      },
       osc2Gain: {
         name: 'Gain',
         min: 0,
@@ -67,6 +83,14 @@ export class TrinityInstrument extends InstrumentPlugin {
         max: 2400,
         step: 100,
         default: 0
+      },
+      osc3CoarseDetune: {
+        name: 'CD',
+        unit: '',
+        min: 0.9,
+        max: 1.1,
+        step: 0.01,
+        default: 1
       },
       osc3Gain: {
         name: 'Gain',

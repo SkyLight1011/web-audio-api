@@ -16,7 +16,7 @@ export class TrinityVoice extends Voice {
       if (!isNoize) {
         this._osc[i] = this.context.createGenerator({
           type,
-          frequency: this.frequency,
+          frequency: this.frequency * this._plugin.get(`osc${i + 1}CoarseDetune`),
           detune: this._plugin.get(`osc${i + 1}Detune`),
           gain
         });
