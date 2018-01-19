@@ -87,6 +87,27 @@ export default [
       filterType: 'lowpass',
       filterCutoff: 500
     }
+  },
+  {
+    id: 'neuro saw',
+    name: 'Neuro Saw',
+    preset: {
+      filterType: 'lowpass',
+      filterCutoff: 900,
+
+      gainEnv: true,
+      gainEnvAttack: 0.001,
+      gainEnvDecay: 0.25,
+      gainEnvRelease: 0.3,
+      gainEnvSustain: 0.75,
+
+      gainLFODelay: 2.5,
+
+      osc1Type: 'sawtooth',
+
+      osc2Type: 'sawtooth',
+      osc2CoarseDetune: 0.99,
+    }
   }
 ];
 
