@@ -49,4 +49,8 @@ export class Param {
 
     this.callback && this.callback(this._value, at, type);
   }
+
+  reset() {
+    this._value = this.default;
+  }
 }

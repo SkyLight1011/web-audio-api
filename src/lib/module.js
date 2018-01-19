@@ -49,6 +49,16 @@ export class Module {
     }
   }
 
+  reset(name) {
+    if (!name) {
+      for (let param of this.params) {
+        param.reset();
+      }
+    } else {
+      this.params[name].reset();
+    }
+  }
+
   get effectivePreset() {
     let preset = {};
 
