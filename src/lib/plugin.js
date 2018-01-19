@@ -17,13 +17,13 @@ export class Plugin extends Module {
         max: 1,
         step: 0.01,
         default: 1,
-        callback: (value, at, type) => this._setParamValue(this._output.gain, value, at, type)
+        callback: (value, at, type) => this._output.gain.set(value, at, type)
       },
       mute: {
         name: 'Mute',
         boolean: true,
         default: false,
-        callback: (mute) => this._setParamValue(this._output.gain, mute ? 0 : this.get('master'))
+        callback: (mute) => this._output.gain.set(mute ? 0 : this.get('master'))
       }
     }
   }

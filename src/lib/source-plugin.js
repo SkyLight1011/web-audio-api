@@ -145,21 +145,21 @@ export class SourcePlugin extends Plugin {
         max: 2e4,
         default: 20,
         exponential: true,
-        callback: (value, at, type) => this._setParamValue(this._filter.frequency, value, at, type)
+        callback: (value, at, type) => this._filter.frequency.set(value, at, type)
       },
       filterQ: {
         name: 'Q',
         min: 0,
         max: 40,
         default: 0,
-        callback: (value, at, type) => this._setParamValue(this._filter.Q, value, at, type)
+        callback: (value, at, type) => this._filter.Q.set(value, at, type)
       },
       filterGain: {
         name: 'Amp',
         min: -40,
         max: 40,
         default: 0,
-        callback: (value, at, type) => this._setParamValue(this._filter.gain, value, at, type)
+        callback: (value, at, type) => this._filter.gain.set(value, at, type)
       }
     });
   }

@@ -22,21 +22,21 @@ export class ParametreqFX extends FxPlugin {
         min: 20,
         max: 2e4,
         default: defaultFreq[i],
-        callback: (value, at, type) => this._setParamValue(this._bands[i].frequency, value, at, type)
+        callback: (value, at, type) => this._bands[i].frequency.set(value, at, type)
       };
       params[`band${i + 1}Q`] = {
         name: 'Q',
         min: 0,
         max: 40,
         default: 2,
-        callback: (value, at, type) => this._setParamValue(this._bands[i].Q, value, at, type)
+        callback: (value, at, type) => this._bands[i].Q.set(value, at, type)
       };
       params[`band${i + 1}Amp`] = {
         name: 'Amp',
         min: -40,
         max: 40,
         default: 0,
-        callback: (value, at, type) => this._setParamValue(this._bands[i].gain, value, at, type)
+        callback: (value, at, type) => this._bands[i].gain.set(value, at, type)
       };
     }
 

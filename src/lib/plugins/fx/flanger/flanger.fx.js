@@ -51,8 +51,8 @@ export class FlangerFX extends FxPlugin {
     this._wet = this.context.createGain();
     this._feedback = this.context.createGain();
 
-    this._setParamValue(this._delay.delayTime, this.get('delay'));
-    this._setParamValue(this._feedback.gain, this.get('feedback'));
+    this._delay.delayTime.set(this.get('delay'));
+    this._feedback.gain.set(this.get('feedback'));
 
     this._osc.to(this._delay.delayTime);
     this._fx

@@ -16,7 +16,7 @@ export class MixerTrack extends Module {
         max: 1,
         step: 0.01,
         default: 1,
-        callback: (value, at, type) => this._setParamValue(this._output.gain, value, at, type)
+        callback: (value, at, type) => this._output.gain.set(value, at, type)
       },
       pan: {
         name: 'Pan',
@@ -24,7 +24,7 @@ export class MixerTrack extends Module {
         max: 1,
         step: 0.01,
         default: 0,
-        callback: (value, at, type) => this._setParamValue(this._panner.pan, value, at,type)
+        callback: (value, at, type) => this._panner.pan.set(value, at,type)
       }
     }
   }
