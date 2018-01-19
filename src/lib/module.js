@@ -49,7 +49,7 @@ export class Module {
     }
   }
 
-  get preset() {
+  get effectivePreset() {
     let preset = {};
 
     for (let param in this.params) {
@@ -57,6 +57,18 @@ export class Module {
     }
 
     return preset;
+  }
+
+  get preset() {
+    const effectivePreset = this.effectivePreset;
+
+    return Object.keys(this.params).reduce((res, key) => {
+      if (this.params[key].default !== this.effectivePreset[key]) {
+        res[key] = this.effectivePreset[key];
+      }
+
+      return res;
+    }, {});
   }
 
   set preset(preset) {
