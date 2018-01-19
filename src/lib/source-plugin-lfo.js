@@ -15,7 +15,8 @@ export class LFO {
   start(at) {
     if (this._preset.delay) {
       this._osc.gain.cancelScheduledValues(at);
-      this._osc.gain.linearRampToValueAtTime(this._preset.amount, at + this._preset.delay);
+      this._osc.gain.setValueAtTime(0, at);
+      this._osc.gain.setTargetAtTime(this._preset.amount, at, this._preset.delay);
     }
 
     this._osc.start(at);
