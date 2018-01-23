@@ -9,7 +9,7 @@ export class MixerTrack extends Module {
   }
 
   get defaults() {
-    return {
+    return Object.assign({}, super.defaults, {
       vol: {
         name: 'Vol',
         min: 0,
@@ -26,7 +26,7 @@ export class MixerTrack extends Module {
         default: 0,
         callback: (value, at, type) => this._panner.pan.set(value, at,type)
       }
-    }
+    });
   }
 
   setup() {
