@@ -6,7 +6,7 @@ export class Module {
     this.params = {};
 
     for (let name in this.defaults) {
-      this.params[name] = new Param(this.defaults[name]);
+      this.params[name] = new Param(this.context, this.defaults[name]);
     }
 
     this.setup();
@@ -21,14 +21,21 @@ export class Module {
         min: 0,
         max: 1,
         step: 0.01,
-        default: 1,
-        callback: (value, at, type) => this._output.gain.set(value, at, type)
+        default: 1
+      },
+      mute: {
+        name: 'Mute',
+        boolean: true,
+        default: false,
+        callback: (mute) => this._output.gain.set(mute ? 0 : this.get('master'))
       }
     };
   }
 
   setup() {
     this._output = this.context.createGain();
+
+    this.params.master.to(this._output.gain);
   }
 
   get(name) {
@@ -91,5 +98,13 @@ export class Module {
     for (let param in this.params) {
       this.set(param, this._preset[param]);
     }
+  }
+
+  to(target) {
+    return this._output.to(target);
+  }
+
+  cut(target) {
+    this._output.cut(target);
   }
 }

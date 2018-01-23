@@ -1,5 +1,7 @@
 export class Param {
-  constructor(options = {}) {
+  constructor(ctx, options = {}) {
+    this.context = ctx;
+
     Object.assign(this, {
       name: 'Parameter',
       unit: ''
@@ -16,6 +18,11 @@ export class Param {
     }
 
     this._value = this.default;
+
+    if (!this.values && !this.boolean) {
+      this._signalSource = this.context.createConstantSource();
+      this._signalSource.offset.setValueAtTime(this._value, this.context.currentTime);
+    }
   }
 
   get value() {
@@ -47,10 +54,28 @@ export class Param {
       this._value = Math.min(Math.max(value, this.min), this.max);
     }
 
+    if (this._signalSource) {
+      this._signalSource.offset.set(this._value, at, type);
+    }
+
     this.callback && this.callback(this._value, at, type);
   }
 
   reset() {
     this._value = this.default;
+  }
+
+  to(...targets) {
+    if (this._signalSource) {
+      return this._signalSource.to(...targets);
+    }
+
+    return null;
+  }
+
+  cut(target) {
+    if (this._signalSource) {
+      this._signalSource.cut(target);
+    }
   }
 }
