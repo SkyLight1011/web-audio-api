@@ -8,14 +8,4 @@ export class Plugin extends Module {
   static get id() {
     return 'plugin';
   }
-
-  get defaults() {
-    return super.defaults;
-  }
-
-  setup() {
-    super.setup();
-
-    this._mount = this.context.createGain();
-  }
 }
