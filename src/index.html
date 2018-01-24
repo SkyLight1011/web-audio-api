@@ -8,10 +8,20 @@
   <link rel="stylesheet" href="/app/all.css">
 </head>
 <body>
-	<synth></synth>
+  <fieldset>
+    <legend>TESTS</legend>
+
+    <fieldset>
+      <input type="range" id="r" min="0" max="1" step="0.01">
+      <button type="button" id="b">====</button>
+    </fieldset>
+  </fieldset>
+
+  <synth></synth>
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js" charset="utf-8"></script>
 
   <script type="module" src="/app/app.js"></script>
+  <script type="module" src="/tests.js"></script>
 </body>
 </html>
