@@ -8,7 +8,7 @@ export class CustomConstantSourceNode {
     this._bufferSource = this.context.createBufferSource();
     this._output = this.context.createGain();
 
-    buffer.getChannelData(0).set((new Float32Array(bufferLen)).map(item => 1));
+    buffer.getChannelData(0).set(new Float32Array(bufferLen).fill(1));
 
     this._output.channelCount = 1;
     this._output.channelCountMode = 'explicit';

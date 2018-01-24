@@ -68,6 +68,12 @@ export class Param {
 
   to(...targets) {
     if (this._signalSource) {
+      for (let target of targets) {
+        if (target instanceof AudioParam) {
+          target.setValueAtTime(0, this.context.currentTime);
+        }
+      }
+
       return this._signalSource.to(...targets);
     }
 
