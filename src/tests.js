@@ -1,27 +1,29 @@
 import {TestAudioContext} from './lib/audio-context.js';
+import {Param} from './lib/param.js';
 
 let ctx = new TestAudioContext();
 
+let param = new Param(ctx, {
+  min: 0,
+  max: 1,
+  default: 1
+});
+let osc = ctx.createGenerator({frequency: 100});
 let master = ctx.createGain();
-let control = ctx.createCustomConstantSource();
-let osc = ctx.createOscillator();
-let playing = false;
 
-osc.frequency.setValueAtTime(45, ctx.currentTime);
-osc.start(ctx.currentTime);
+param.to(osc.gain);
+osc.to(master).to(ctx.destination);
 
-control.to(master.gain);
-master.to(ctx.destination);
-control.start(ctx.currentTime);
+//osc.start();
 
-document.querySelector('#r').value = control.offset.value;
+document.querySelector('#r').value = param.value;
 
 document.querySelector('#r').addEventListener('input', e => {
-  control.offset.setValueAtTime(+e.target.value, ctx.currentTime);
+  param.set(+e.target.value);
 });
 
 document.querySelector('#b').addEventListener('click', e => {
-  if (playing) {
+  /*if (playing) {
     osc.cut();
   } else {
     osc.to(master);
@@ -29,5 +31,5 @@ document.querySelector('#b').addEventListener('click', e => {
     console.log(control, master);
   }
 
-  playing = !playing;
+  playing = !playing;*/
 });
