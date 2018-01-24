@@ -1,6 +1,7 @@
 import applyOverrides from './overrides.js';
 
 import {GeneratorNode} from './generator.js';
+import {CustomConstantSourceNode} from './constant-source-custom.js';
 
 export class TestAudioContext extends AudioContext {
   constructor() {
@@ -11,5 +12,9 @@ export class TestAudioContext extends AudioContext {
 
   createGenerator(preset) {
     return new GeneratorNode(this, preset);
+  }
+
+  createCustomConstantSource() {
+    return new CustomConstantSourceNode(this);
   }
 }

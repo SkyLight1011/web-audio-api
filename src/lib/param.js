@@ -20,8 +20,9 @@ export class Param {
     this._value = this.default;
 
     if (!this.values && !this.boolean) {
-      this._signalSource = this.context.createConstantSource();
+      this._signalSource = this.context.createCustomConstantSource();
       this._signalSource.offset.setValueAtTime(this._value, this.context.currentTime);
+      this._signalSource.start(this.context.currentTime);
     }
   }
 
