@@ -70,7 +70,7 @@ export class Param {
     if (this._signalSource) {
       for (let target of targets) {
         if (target instanceof AudioParam) {
-          target.setValueAtTime(0, this.context.currentTime);
+          target.set(0);
         }
       }
 

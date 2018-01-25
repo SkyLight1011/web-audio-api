@@ -12,6 +12,8 @@ export class Module {
     this.setup();
 
     this.preset = preset;
+
+    this.bindParams();
   }
 
   get defaults() {
@@ -27,14 +29,16 @@ export class Module {
         name: 'Mute',
         boolean: true,
         default: false,
-        callback: (mute) => this._output.gain.set(mute ? 0 : this.get('master'))
+        callback: (mute) => this._output[mute ? 'mute' : 'unmute']
       }
     };
   }
 
   setup() {
     this._output = this.context.createGain();
+  }
 
+  bindParams() {
     this.params.master.to(this._output.gain);
   }
 
