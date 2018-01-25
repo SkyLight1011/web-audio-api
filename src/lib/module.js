@@ -29,7 +29,7 @@ export class Module {
         name: 'Mute',
         boolean: true,
         default: false,
-        callback: (mute) => this._output[mute ? 'mute' : 'unmute']
+        callback: (mute) => this._output.mute(mute)
       }
     };
   }

@@ -44,12 +44,12 @@ export default function (ctx) {
     targets.map(node.to);
   };
 
-  AudioNode.prototype.mute = function () {
-    disconnect.call(this);
-  };
-
-  AudioNode.prototype.unmute = function () {
-    connect.call(this, ...this._targets);
+  AudioNode.prototype.mute = function (mute) {
+    if (mute) {
+      disconnect.call(this);
+    } else {
+      connect.call(this, ...this._targets);
+    }
   };
 
   AudioParam.prototype.set = function (value, at = 0, type) {
