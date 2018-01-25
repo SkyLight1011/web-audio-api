@@ -1,3 +1,6 @@
+const connect = AudioNode.prototype.connect;
+const disconnect = AudioNode.prototype.disconnect;
+
 export default function (ctx) {
   AudioNode.prototype.to = function (...targets) {
     for (let target of targets) {
@@ -10,9 +13,6 @@ export default function (ctx) {
   AudioNode.prototype.cut = function (target) {
     (this._output || this).disconnect(target && target._input || target);
   };
-
-  let connect = AudioNode.prototype.connect;
-  let disconnect = AudioNode.prototype.disconnect;
 
   AudioNode.prototype.connect = function (target) {
     this._targets || (this._targets = []);
@@ -42,6 +42,14 @@ export default function (ctx) {
     this.to(node);
 
     targets.map(node.to);
+  };
+
+  AudioNode.prototype.mute = function () {
+    disconnect.call(this);
+  };
+
+  AudioNode.prototype.unmute = function () {
+    connect.call(this, ...this._targets);
   };
 
   AudioParam.prototype.set = function (value, at = 0, type) {
