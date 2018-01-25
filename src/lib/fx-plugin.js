@@ -17,13 +17,12 @@ export class FxPlugin extends Plugin {
         max: 1,
         step: 0.01,
         default: 1,
-        callback: (value, at, type) => this._raw.gain.set(value, at, type)
       },
       pass: {
         name: 'Pass through',
         boolean: true,
         default: false,
-        callback: (value) => this._fx.gain.set(+!value)
+        callback: (value) => this._fx.mute(value)
       }
     });
   }
@@ -36,5 +35,11 @@ export class FxPlugin extends Plugin {
     this._fx = this.context.createGain();
 
     this._input.to(this._raw, this._fx).to(this._output);
+  }
+
+  bindParams() {
+    super.bindParams();
+
+    this.params.raw.to(this._raw.gain);
   }
 }

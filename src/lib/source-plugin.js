@@ -145,21 +145,18 @@ export class SourcePlugin extends Plugin {
         max: 2e4,
         default: 20,
         exponential: true,
-        callback: (value, at, type) => this._filter.frequency.set(value, at, type)
       },
       filterQ: {
         name: 'Q',
         min: 0,
         max: 40,
         default: 0,
-        callback: (value, at, type) => this._filter.Q.set(value, at, type)
       },
       filterGain: {
         name: 'Amp',
         min: -40,
         max: 40,
         default: 0,
-        callback: (value, at, type) => this._filter.gain.set(value, at, type)
       }
     });
   }
@@ -172,6 +169,14 @@ export class SourcePlugin extends Plugin {
     this._filter = this.context.createBiquadFilter();
 
     this._mount.to(this._filter).to(this._output);
+  }
+
+  bindParams() {
+    super.bindParams();
+
+    this.params.filterCutoff.to(this._filter.frequency);
+    this.params.filterQ.to(this._filter.Q);
+    this.params.filterGain.to(this._filter.gain);
   }
 
   play(note, at = 0, dur = 0) {

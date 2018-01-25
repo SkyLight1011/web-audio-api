@@ -66,11 +66,26 @@ export class Param {
     this._value = this.default;
   }
 
-  to(...targets) {
+  to(...args) {
+    let targets = [];
+    let relative = false;
+
+    for (let arg of args) {
+      if (typeof arg === 'object') {
+        targets.push(arg);
+      } else {
+        relative = !!arg;
+
+        break;
+      }
+    }
+
     if (this._signalSource) {
-      for (let target of targets) {
-        if (target instanceof AudioParam) {
-          target.set(0);
+      if (!relative) {
+        for (let target of targets) {
+          if (target instanceof AudioParam) {
+            target.set(0);
+          }
         }
       }
 

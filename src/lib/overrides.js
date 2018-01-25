@@ -47,7 +47,7 @@ export default function (ctx) {
   AudioNode.prototype.mute = function (mute) {
     if (mute) {
       disconnect.call(this);
-    } else {
+    } else if (this._targets && this._targets.length) {
       connect.call(this, ...this._targets);
     }
   };
