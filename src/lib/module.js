@@ -7,9 +7,7 @@ export class Module {
 
     this.setup();
 
-    for (let name in this.defaults) {
-      this.params[name] = new Param(this.context, this.defaults[name], preset[name]);
-    }
+    this._createParams(this.defaults, preset);
 
     this.bindParams();
   }
@@ -107,5 +105,27 @@ export class Module {
 
   cut(target) {
     this._output.cut(target);
+  }
+
+  _createParams(params, preset = {}) {
+    for (let name in params) {
+      if (this._checkParamSchema(params[name])) {
+        this.params[name] = new Param(this.context, params[name], preset[name]);
+      } else {
+        this._createParams(params[name], preset[name]);
+      }
+    }
+  }
+
+  _checkParamSchema(preset) {
+    return 'name' in preset &&
+      'default' in preset &&
+      (
+        'values' in preset ||
+        'boolean' in preset ||
+        (
+          'min' in preset && 'max' in preset
+        )
+      )
   }
 }
