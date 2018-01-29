@@ -24,6 +24,8 @@ export class Param {
       this._signalSource.offset.setValueAtTime(this._value, this.context.currentTime);
       this._signalSource.start(this.context.currentTime);
     }
+
+    this._callbacks = [];
   }
 
   get value() {
@@ -59,11 +61,17 @@ export class Param {
       this._signalSource.offset.set(this._value, at, type);
     }
 
-    this.callback && this.callback(this._value, at, type);
+    for (let cb in this._callbacks) {
+      cb(this._value, at, type);
+    }
   }
 
   reset() {
     this._value = this.default;
+  }
+
+  onChange(cb) {
+    this._callbacks.push(cb);
   }
 
   to(...args) {
