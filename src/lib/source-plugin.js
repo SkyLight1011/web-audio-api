@@ -136,7 +136,7 @@ export class SourcePlugin extends Plugin {
         name: 'Type',
         values: ['lowpass', 'highpass', 'lowshelf', 'highshelf'],
         default: 'highpass',
-        callback: (value) => this._filter.type = value
+        bindings: [[this._filter, 'type']]
       },
       filterCutoff: {
         name: 'Cutoff',
@@ -145,18 +145,21 @@ export class SourcePlugin extends Plugin {
         max: 2e4,
         default: 20,
         exponential: true,
+        bindings: this._filter.frequency
       },
       filterQ: {
         name: 'Q',
         min: 0,
         max: 40,
         default: 0,
+        bindings: this._filter.Q
       },
       filterGain: {
         name: 'Amp',
         min: -40,
         max: 40,
         default: 0,
+        bindings: this._filter.gain
       }
     });
   }
@@ -169,14 +172,6 @@ export class SourcePlugin extends Plugin {
     this._filter = this.context.createBiquadFilter();
 
     this._mount.to(this._filter).to(this._output);
-  }
-
-  bindParams() {
-    super.bindParams();
-
-    this.params.filterCutoff.to(this._filter.frequency);
-    this.params.filterQ.to(this._filter.Q);
-    this.params.filterGain.to(this._filter.gain);
   }
 
   play(note, at = 0, dur = 0) {
