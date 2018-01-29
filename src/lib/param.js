@@ -26,6 +26,14 @@ export class Param {
     }
 
     this._callbacks = [];
+
+    if (this.bindings) {
+      if (Array.isArray(this.bindings)) {
+        for (let binding in this.bindings) {
+          this.bindTo(binding);
+        }
+      }
+    }
   }
 
   get value() {
@@ -101,6 +109,20 @@ export class Param {
     }
 
     return null;
+  }
+
+  bindTo(node) {
+    let param;
+
+    if (Array.isArray(node)) {
+      [node, param] = node;
+    }
+
+    if (node instanceof AudioParam) {
+      this.to(node);
+    } else if (node instanceof AudioNode && param) {
+      this._callbacks.push(value => node[param] = value);
+    }
   }
 
   cut(target) {
