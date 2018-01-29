@@ -5,11 +5,11 @@ export class Module {
     this.context = ctx;
     this.params = {};
 
+    this.setup();
+
     for (let name in this.defaults) {
       this.params[name] = new Param(this.context, this.defaults[name]);
     }
-
-    this.setup();
 
     this.preset = preset;
 
@@ -23,7 +23,8 @@ export class Module {
         min: 0,
         max: 1,
         step: 0.01,
-        default: 1
+        default: 1,
+        bindings: this._output.gain
       },
       mute: {
         name: 'Mute',
@@ -38,9 +39,7 @@ export class Module {
     this._output = this.context.createGain();
   }
 
-  bindParams() {
-    this.params.master.to(this._output.gain);
-  }
+  bindParams() {}
 
   get(name) {
     return this.params[name] && this.params[name].get();
