@@ -28,12 +28,8 @@ export class Param {
     this._callbacks = [];
 
     if (this.bindings) {
-      if (Array.isArray(this.bindings)) {
-        for (let binding of this.bindings) {
-          this.bindTo(binding);
-        }
-      } else {
-        this.bindTo(this.bindings);
+      for (let binding of this.bindings) {
+        this.bindTo(binding);
       }
     }
   }

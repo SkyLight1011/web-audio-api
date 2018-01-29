@@ -145,21 +145,21 @@ export class SourcePlugin extends Plugin {
         max: 2e4,
         default: 20,
         exponential: true,
-        bindings: this._filter.frequency
+        bindings: [this._filter.frequency]
       },
       filterQ: {
         name: 'Q',
         min: 0,
         max: 40,
         default: 0,
-        bindings: this._filter.Q
+        bindings: [this._filter.Q]
       },
       filterGain: {
         name: 'Amp',
         min: -40,
         max: 40,
         default: 0,
-        bindings: this._filter.gain
+        bindings: [this._filter.gain]
       }
     });
   }

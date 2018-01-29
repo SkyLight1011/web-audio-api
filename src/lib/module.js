@@ -22,7 +22,7 @@ export class Module {
         max: 1,
         step: 0.01,
         default: 1,
-        bindings: this._output.gain
+        bindings: [this._output.gain]
       },
       mute: {
         name: 'Mute',
