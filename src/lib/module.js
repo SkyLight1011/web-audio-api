@@ -8,10 +8,8 @@ export class Module {
     this.setup();
 
     for (let name in this.defaults) {
-      this.params[name] = new Param(this.context, this.defaults[name]);
+      this.params[name] = new Param(this.context, this.defaults[name], preset[name]);
     }
-
-    this.preset = preset;
 
     this.bindParams();
   }

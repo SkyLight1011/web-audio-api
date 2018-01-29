@@ -1,5 +1,5 @@
 export class Param {
-  constructor(ctx, options = {}) {
+  constructor(ctx, options = {}, value) {
     this.context = ctx;
 
     Object.assign(this, {
@@ -17,7 +17,7 @@ export class Param {
       }
     }
 
-    this._value = this.default;
+    this._value = value || this.default;
 
     if (!this.values && !this.boolean) {
       this._signalSource = this.context.createCustomConstantSource();
@@ -29,9 +29,11 @@ export class Param {
 
     if (this.bindings) {
       if (Array.isArray(this.bindings)) {
-        for (let binding in this.bindings) {
+        for (let binding of this.bindings) {
           this.bindTo(binding);
         }
+      } else {
+        this.bindTo(this.bindings);
       }
     }
   }
@@ -69,7 +71,7 @@ export class Param {
       this._signalSource.offset.set(this._value, at, type);
     }
 
-    for (let cb in this._callbacks) {
+    for (let cb of this._callbacks) {
       cb(this._value, at, type);
     }
   }
