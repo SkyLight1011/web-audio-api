@@ -48,10 +48,10 @@ export class Module {
 
     if (Array.isArray(value)) {
       for (let args of value) {
-        this.params[name].set(...args);
+        (this.params[name] instanceof Param) && this.params[name].set(...args);
       }
     } else {
-      this.params[name].set(value, at, type);
+      (this.params[name] instanceof Param) && this.params[name].set(value, at, type);
     }
   }
 
@@ -107,12 +107,14 @@ export class Module {
     this._output.cut(target);
   }
 
-  _createParams(params, preset = {}) {
+  _createParams(params, preset = {}, group) {
+    group || (group = this.params);
+
     for (let name in params) {
       if (this._checkParamSchema(params[name])) {
-        this.params[name] = new Param(this.context, params[name], preset[name]);
+        group[name] = new Param(this.context, params[name], preset[name]);
       } else {
-        this._createParams(params[name], preset[name]);
+        this._createParams(params[name], preset[name], this.params[name] = {});
       }
     }
   }
