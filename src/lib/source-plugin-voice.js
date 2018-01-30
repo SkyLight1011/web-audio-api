@@ -31,7 +31,7 @@ export class Voice extends Module {
         .to(this._output);
     }
 
-    this.addEnvelope(this._gainEnv.gain, {
+    /*this.addEnvelope(this._gainEnv.gain, {
       enabled: 'gainEnv',
       delay: 'gainEnvDelay',
       attack: 'gainEnvAttack',
@@ -52,14 +52,14 @@ export class Voice extends Module {
       sustain: 'filterEnvSustain',
       release: 'filterEnvRelease',
       amount: 'filterEnvAmount'
-    });
+    });*/
 
-    if (this._plugin.params.gainLFO.amount.get()) {
+    if (this._plugin.get('gainLFO.amount')) {
       this.gainLFO = this.addLFO(this._velocity.gain, this._plugin._preset.gainLFO);
 
-      this._plugin.get('type').bindTo([this.gainLFO, 'type']);
-      this._plugin.get('amount').to(this.gainLFO.amount);
-      this._plugin.get('speed').to(this.gainLFO.speed);
+      this._plugin.get('gainLFO.type').bindTo([this.gainLFO, 'type']);
+      this._plugin.get('gainLFO.amount').to(this.gainLFO.amount);
+      this._plugin.get('gainLFO.speed').to(this.gainLFO.speed);
     }
   }
 
