@@ -38,7 +38,15 @@ export class Module {
   bindParams() {}
 
   get(name) {
-    return this.params[name] && this.params[name].get();
+    let parts = name.split('.');
+    let currentKey;
+    let param = this.params;
+
+    while (currentKey = parts.shift()) {
+      param = param[currentKey];
+    };
+
+    return param && param.get();
   }
 
   set(name, value, at = 0, type) {
