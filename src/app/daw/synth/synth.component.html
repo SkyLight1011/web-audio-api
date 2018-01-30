@@ -61,10 +61,11 @@
     <fieldset>
       <legend>Gain</legend>
 
-      <select ng-options="item for item in $ctrl.instrument.params.gainLFOType.values" ng-model="$ctrl.instrument.params.gainLFOType.value"></select>
-      <slider param="$ctrl.instrument.params.gainLFO" ng-model="$ctrl.instrument.params.gainLFO.value"></slider>
-      <slider param="$ctrl.instrument.params.gainLFODelay" ng-model="$ctrl.instrument.params.gainLFODelay.value"></slider>
-      <slider param="$ctrl.instrument.params.gainLFOSpeed" ng-model="$ctrl.instrument.params.gainLFOSpeed.value"></slider>
+      <slider param="$ctrl.instrument.params.gainLFO.delay" ng-model="$ctrl.instrument.params.gainLFO.delay.value"></slider>
+      <slider param="$ctrl.instrument.params.gainLFO.attack" ng-model="$ctrl.instrument.params.gainLFO.attack.value"></slider>
+      <select ng-options="item for item in $ctrl.instrument.params.gainLFO.type.values" ng-model="$ctrl.instrument.params.gainLFO.type.value"></select>
+      <slider param="$ctrl.instrument.params.gainLFO.amount" ng-model="$ctrl.instrument.params.gainLFO.amount.value"></slider>
+      <slider param="$ctrl.instrument.params.gainLFO.speed" ng-model="$ctrl.instrument.params.gainLFO.speed.value"></slider>
     </fieldset>
   </fieldset>
 </div>

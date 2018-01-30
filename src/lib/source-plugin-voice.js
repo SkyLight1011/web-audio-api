@@ -54,13 +54,12 @@ export class Voice extends Module {
       amount: 'filterEnvAmount'
     });
 
-    if (this._plugin.get('gainLFO')) {
-      this.addLFO(this._velocity.gain, {
-        amount: this._plugin.get('gainLFO'),
-        type: this._plugin.get('gainLFOType'),
-        speed: this._plugin.get('gainLFOSpeed'),
-        delay: this._plugin.get('gainLFODelay')
-      });
+    if (this._plugin.params.gainLFO.amount.get()) {
+      this.gainLFO = this.addLFO(this._velocity.gain, this._plugin._preset.gainLFO);
+
+      this._plugin.get('type').bindTo([this.gainLFO, 'type']);
+      this._plugin.get('amount').to(this.gainLFO.amount);
+      this._plugin.get('speed').to(this.gainLFO.speed);
     }
   }
 
@@ -73,7 +72,11 @@ export class Voice extends Module {
   }
 
   addLFO(param, preset = {}) {
-    this._lfo.push(new LFO(this._plugin, param, preset));
+    let lfo = new LFO(this._plugin, param, preset);
+
+    this._lfo.push(lfo);
+
+    return lfo;
   }
 
   play(at = 0, dur = 0) {

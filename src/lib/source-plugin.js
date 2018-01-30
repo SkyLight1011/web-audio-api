@@ -49,28 +49,36 @@ export class SourcePlugin extends Plugin {
       },
 
       gainLFO: {
-        name: 'Gain LFO',
-        min: 0,
-        max: 1,
-        default: 0
-      },
-      gainLFOType: {
-        name: 'Type',
-        values: WAVE_TYPES,
-        default: 'sine'
-      },
-      gainLFODelay: {
-        name: 'Delay',
-        min: 0,
-        max: 5,
-        default: 0.5
-      },
-      gainLFOSpeed: {
-        name: 'Speed',
-        unit: 'Hz',
-        min: 0,
-        max: 50,
-        default: 5
+        delay: {
+          name: 'Delay',
+          min: 0,
+          max: 5,
+          default: 0
+        },
+        attack: {
+          name: 'Attack',
+          min: 0,
+          max: 5,
+          default: 0
+        },
+        type: {
+          name: 'Type',
+          values: WAVE_TYPES,
+          default: 'sine'
+        },
+        amount: {
+          name: 'Amount',
+          min: 0,
+          max: 1,
+          default: 0
+        },
+        speed: {
+          name: 'Speed',
+          unit: 'Hz',
+          min: 0,
+          max: 50,
+          default: 5
+        }
       },
 
       filterEnv: {

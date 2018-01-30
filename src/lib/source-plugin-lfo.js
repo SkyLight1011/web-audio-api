@@ -9,14 +9,29 @@ export class LFO {
       gain: this._preset.amount
     });
 
+    this.amount = this._osc.gain;
+    this.speed = this._osc.frequency;
+    this.delay = preset.delay;
+    this.attack = preset.attack;
+
     this._osc.to(param);
   }
 
+  get type() {
+    return this._osc.type;
+  }
+
+  set type(value) {
+    this._osc.type = value;
+  }
+
   start(at) {
-    if (this._preset.delay) {
+    at += this.delay || 0;
+
+    if (this.attack) {
       this._osc.gain.cancelScheduledValues(at);
       this._osc.gain.setValueAtTime(0, at);
-      this._osc.gain.setTargetAtTime(this._preset.amount, at, this._preset.delay);
+      this._osc.gain.setTargetAtTime(this._preset.amount, at, this.attack);
     }
 
     this._osc.start(at);
