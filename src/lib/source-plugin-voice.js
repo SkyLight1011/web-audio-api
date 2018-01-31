@@ -55,13 +55,7 @@ export class Voice extends Module {
     });*/
 
     if (this._plugin.get('gainLFO.amount')) {
-      this.gainLFO = this.addLFO(this._velocity.gain, this._plugin._preset.gainLFO);
-
-      this._plugin.params.gainLFO.type.bindTo([this.gainLFO, 'type']);
-      this._plugin.params.gainLFO.amount.to(this.gainLFO.amount);
-      this._plugin.params.gainLFO.speed.to(this.gainLFO.speed);
-      this._plugin.params.gainLFO.delay.bindTo([this.gainLFO, 'delay']);
-      this._plugin.params.gainLFO.attack.bindTo([this.gainLFO, 'attack']);
+      this.addLFO(this._velocity.gain, 'gainLFO');
     }
   }
 
@@ -73,10 +67,16 @@ export class Voice extends Module {
     this._env.push(new Envelope(this._plugin, param, preset));
   }
 
-  addLFO(param, preset = {}) {
+  addLFO(param, lfoType) {
+    let preset = this._plugin._preset[lfoType];
+    let paramGroup = this._plugin.params[lfoType];
     let lfo = new LFO(this._plugin, param, preset);
 
     this._lfo.push(lfo);
+
+    for (let param in paramGroup) {
+      paramGroup[param].bindTo([lfo, param]);
+    }
 
     return lfo;
   }
