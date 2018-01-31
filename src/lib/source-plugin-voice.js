@@ -57,9 +57,11 @@ export class Voice extends Module {
     if (this._plugin.get('gainLFO.amount')) {
       this.gainLFO = this.addLFO(this._velocity.gain, this._plugin._preset.gainLFO);
 
-      this._plugin.get('gainLFO.type').bindTo([this.gainLFO, 'type']);
-      this._plugin.get('gainLFO.amount').to(this.gainLFO.amount);
-      this._plugin.get('gainLFO.speed').to(this.gainLFO.speed);
+      this._plugin.params.gainLFO.type.bindTo([this.gainLFO, 'type']);
+      this._plugin.params.gainLFO.amount.to(this.gainLFO.amount);
+      this._plugin.params.gainLFO.speed.to(this.gainLFO.speed);
+      this._plugin.params.gainLFO.delay.bindTo([this.gainLFO, 'delay']);
+      this._plugin.params.gainLFO.attack.bindTo([this.gainLFO, 'attack']);
     }
   }
 
