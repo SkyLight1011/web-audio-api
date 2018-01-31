@@ -119,9 +119,13 @@ export class Param {
     if (node instanceof AudioParam) {
       this.to(node);
     } else if (node instanceof AudioNode && param) {
-      node[param] = this._value;
+      if (node[param] instanceof AudioParam) {
+        this.to(node[param]);
+      } else {
+        node[param] = this._value;
 
-      this._callbacks.push(value => node[param] = value);
+        this._callbacks.push(value => node[param] = value);
+      }
     }
   }
 
