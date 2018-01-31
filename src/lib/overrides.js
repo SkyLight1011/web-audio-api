@@ -79,4 +79,6 @@ export default function (ctx) {
         this.setValueAtTime(value, at);
     }
   };
+
+  AudioParam.prototype.cancel = AudioParam.prototype.cancelScheduledValues;
 }
