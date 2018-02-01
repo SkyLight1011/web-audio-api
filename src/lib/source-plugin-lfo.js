@@ -2,13 +2,17 @@ export class LFO extends GainNode {
   constructor(plugin, param, preset = {}) {
     super(plugin.context);
 
-    this._preset = preset;
+    this._preset = {
+      delay: 0,
+      attack: 0,
+      ...preset
+    };
     this._osc = this.context.createGenerator();
 
     this.amount = this._osc.gain;
     this.speed = this._osc.frequency;
-    this.delay = preset.delay || 0;
-    this.attack = preset.attack || 0;
+    this.delay = this._preset.delay;
+    this.attack = this._preset.attack;
 
     this._osc.to(this).to(param);
   }
