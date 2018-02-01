@@ -118,7 +118,7 @@ export class Param {
 
     if (node instanceof AudioParam) {
       this.to(node);
-    } else if (node instanceof AudioNode && param) {
+    } else if (node && param) {
       if (node[param] instanceof AudioParam) {
         this.to(node[param]);
       } else {
@@ -133,5 +133,9 @@ export class Param {
     if (this._signalSource) {
       this._signalSource.cut(target);
     }
+  }
+
+  valueOf() {
+    return this.get();
   }
 }
