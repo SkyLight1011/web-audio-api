@@ -50,16 +50,24 @@ export class Module {
   }
 
   set(name, value, at = 0, type) {
-    if (!this.params[name]) {
-      throw new Error(`Unknown parameter ${name}`);
-    }
-
     if (Array.isArray(value)) {
       for (let args of value) {
-        (this.params[name] instanceof Param) && this.params[name].set(...args);
+        this.set(name, ...args);
       }
     } else {
-      (this.params[name] instanceof Param) && this.params[name].set(value, at, type);
+      let parts = name.split('.');
+      let currentKey;
+      let param = this.params;
+
+      while (currentKey = parts.shift()) {
+        param = param[currentKey];
+      };
+
+      if (param instanceof Param) {
+        param.set(value, at, type);
+      } else {
+        throw new Error(`Unknown parameter ${name}`);
+      }
     }
   }
 
@@ -77,7 +85,15 @@ export class Module {
     let preset = {};
 
     for (let param in this.params) {
-      preset[param] = this.get(param);
+      if (this.params[param] instanceof Param) {
+        preset[param] = this.get(param);
+      } else {
+        preset[param] = {};
+
+        for (let subParam in this.params[param]) {
+          preset[param][subParam] = this.get([param, subParam].join('.'));
+        }
+      }
     }
 
     return preset;
@@ -103,7 +119,13 @@ export class Module {
     this._preset = preset;
 
     for (let param in this.params) {
-      this.set(param, this._preset[param]);
+      if (!(this.params[param] instanceof Param) && (typeof this.params[param] === 'object')) {
+        for (let subParam in this.params[param]) {
+          (typeof this._preset[param] !== 'undefined') && this.set([param, subParam].join('.'), this._preset[param][subParam]);
+        }
+      } else {
+        this.set(param, this._preset[param]);
+      }
     }
   }
 
