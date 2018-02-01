@@ -15,37 +15,39 @@ export class SourcePlugin extends Plugin {
   get defaults() {
     return Object.assign({}, super.defaults, {
       gainEnv: {
-        name: 'Gain envelope',
-        boolean: true,
-        default: false
-      },
-      gainEnvAttack: {
-        name: 'Att',
-        unit: 's',
-        min: 0.001,
-        max: 5,
-        default: 0.005
-      },
-      gainEnvDecay: {
-        name: 'Dec',
-        unit: 's',
-        min: 0.001,
-        max: 5,
-        default: 0.04
-      },
-      gainEnvSustain: {
-        name: 'Sus',
-        min: 0,
-        max: 1,
-        step: 0.01,
-        default: 0.25
-      },
-      gainEnvRelease: {
-        name: 'Rel',
-        unit: 's',
-        min: 0.001,
-        max: 10,
-        default: 0.2
+        enabled: {
+          name: 'Gain LFO',
+          boolean: true,
+          default: false
+        },
+        attack: {
+          name: 'Att',
+          unit: 's',
+          min: 0.001,
+          max: 5,
+          default: 0.005
+        },
+        decay: {
+          name: 'Dec',
+          unit: 's',
+          min: 0.001,
+          max: 5,
+          default: 0.04
+        },
+        sustain: {
+          name: 'Sus',
+          min: 0,
+          max: 1,
+          step: 0.01,
+          default: 0.25
+        },
+        release: {
+          name: 'Rel',
+          unit: 's',
+          min: 0.001,
+          max: 10,
+          default: 0.2
+        }
       },
 
       gainLFO: {
@@ -82,62 +84,64 @@ export class SourcePlugin extends Plugin {
       },
 
       filterEnv: {
-        name: 'Filter envelope',
-        boolean: true,
-        default: false
-      },
-      filterEnvReverse: {
-        name: 'Rev',
-        boolean: true,
-        default: false,
-      },
-      filterEnvAmount: {
-        name: 'Amt',
-        min: 0,
-        max: 1,
-        default: 0
-      },
-      filterEnvDelay: {
-        name: 'Delay',
-        unit: 's',
-        min: 0,
-        max: 5,
-        default: 0
-      },
-      filterEnvAttack: {
-        name: 'Att',
-        unit: 's',
-        min: 0.001,
-        max: 5,
-        default: 0
-      },
-      filterEnvDecay: {
-        name: 'Dec',
-        unit: 's',
-        min: 0.001,
-        max: 5,
-        default: 0
-      },
-      filterEnvHold: {
-        name: 'Hold',
-        unit: 's',
-        min: 0,
-        max: 10,
-        default: 0
-      },
-      filterEnvSustain: {
-        name: 'Sus',
-        min: 0,
-        max: 1,
-        step: 0.01,
-        default: 1
-      },
-      filterEnvRelease: {
-        name: 'Rel',
-        unit: 's',
-        min: 0.001,
-        max: 10,
-        default: 0
+        enabled: {
+          name: 'Filter envelope',
+          boolean: true,
+          default: false
+        },
+        reverse: {
+          name: 'Rev',
+          boolean: true,
+          default: false,
+        },
+        amount: {
+          name: 'Amt',
+          min: 0,
+          max: 1,
+          default: 0
+        },
+        delay: {
+          name: 'Delay',
+          unit: 's',
+          min: 0,
+          max: 5,
+          default: 0
+        },
+        attack: {
+          name: 'Att',
+          unit: 's',
+          min: 0.001,
+          max: 5,
+          default: 0
+        },
+        hold: {
+          name: 'Hold',
+          unit: 's',
+          min: 0,
+          max: 10,
+          default: 0
+        },
+        decay: {
+          name: 'Dec',
+          unit: 's',
+          min: 0.001,
+          max: 5,
+          default: 0
+        },
+        sustain: {
+          name: 'Sus',
+          min: 0,
+          max: 1,
+          step: 0.01,
+          default: 1
+        },
+        release: {
+          name: 'Rel',
+          unit: 's',
+          min: 0.001,
+          max: 10,
+          default: 0
+        }
       },
 
       filterType: {

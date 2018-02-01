@@ -11,17 +11,21 @@ export default [
       osc3Detune: -2400,
       osc3lfo: true,
 
-      gainEnv: true,
-      gainEnvDecay: 0.25,
-      gainEnvSustain: 0.25,
-      gainEnvRelease: 0.2,
+      gainEnv: {
+        enabled: true,
+        decay: 0.25,
+        sustain: 0.25,
+        release: 0.2
+      },
 
-      filterEnv: true,
-      filterEnvAmount: 0.25,
-      filterEnvAttack: 0.01,
-      filterEnvDecay: 0.25,
-      filterEnvSustain: 0.1,
-      filterEnvRelease: 1
+      filterEnv: {
+        enabled: true,
+        amount: 0.25,
+        attack: 0.01,
+        decay: 0.25,
+        sustain: 0.1,
+        release: 1
+      }
     }
   },
   {

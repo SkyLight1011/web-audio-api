@@ -48,7 +48,7 @@ export class TrinityVoice extends Voice {
   }
 
   stop(at = 0, force) {
-    let minDur = force || (this._plugin.get('gainEnv') && this._plugin.get('gainEnvRelease')) || 0;
+    let minDur = force || this._plugin.get('gainEnv.release') || 0;
 
     for (let osc of this._osc) {
       osc.gain.set(0, at + minDur + 0.01, 1);

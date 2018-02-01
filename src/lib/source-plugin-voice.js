@@ -22,7 +22,7 @@ export class Voice extends Module {
       .to(this._velocity)
       .to(this._gainEnv);
 
-    if (this._plugin.get('filterEnv')) {
+    if (this._plugin.get('filterEnv.enabled')) {
       this._gainEnv
         .to(this._filter)
         .to(this._output);
@@ -31,28 +31,12 @@ export class Voice extends Module {
         .to(this._output);
     }
 
-    /*this.addEnvelope(this._gainEnv.gain, {
-      enabled: 'gainEnv',
-      delay: 'gainEnvDelay',
-      attack: 'gainEnvAttack',
-      hold: 'gainEnvHold',
-      decay: 'gainEnvDecay',
-      sustain: 'gainEnvSustain',
-      release: 'gainEnvRelease',
-      amount: 'gainEnvAmount',
+    this.gainEnv = this.addEnvelope(this._gainEnv.gain, 'gainEnv', {
       min: 0,
-      max: 1
+      max: 1,
+      amount: 1
     });
-    this.addEnvelope(this._filter.frequency, {
-      enabled: 'filterEnv',
-      delay: 'filterEnvDelay',
-      attack: 'filterEnvAttack',
-      hold: 'filterEnvHold',
-      decay: 'filterEnvDecay',
-      sustain: 'filterEnvSustain',
-      release: 'filterEnvRelease',
-      amount: 'filterEnvAmount'
-    });*/
+    this.filterEnv = this.addEnvelope(this._filter.frequency, 'filterEnv');
 
     if (this._plugin.get('gainLFO.amount')) {
       this.addLFO(this._velocity.gain, 'gainLFO');
@@ -63,19 +47,30 @@ export class Voice extends Module {
     return 440 * Math.pow(2, (this._note - 69) / 12);
   }
 
-  addEnvelope(param, preset = {}) {
-    this._env.push(new Envelope(this._plugin, param, preset));
+  addEnvelope(param, envType, options = {}) {
+    let paramGroup = this._plugin.params[envType];
+    let env = new Envelope(this._plugin, param, {
+      ...options,
+      ...this._plugin._preset[envType]
+    });
+
+    this._env.push(env);
+
+    for (let param in paramGroup) {
+      paramGroup[param].bindTo([env.params, param]);
+    }
+
+    return env;
   }
 
   addLFO(param, lfoType) {
-    let preset = this._plugin._preset[lfoType];
     let paramGroup = this._plugin.params[lfoType];
-    let lfo = new LFO(this._plugin, param, preset);
+    let lfo = new LFO(this._plugin, param, this._plugin._preset[lfoType]);
 
     this._lfo.push(lfo);
 
     for (let param in paramGroup) {
-      paramGroup[param].bindTo([lfo, param]);
+      paramGroup[param].bindTo([lfo.params, param]);
     }
 
     return lfo;
@@ -89,6 +84,7 @@ export class Voice extends Module {
     for (let lfo of this._lfo) {
       lfo.start(at);
     }
+    console.log(this);
   }
 
   stop(at = 0) {
