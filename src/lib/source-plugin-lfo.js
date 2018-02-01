@@ -29,7 +29,7 @@ export class LFO extends GainNode {
 
   start(at) {
     if (this.params.attack || this.params.delay) {
-      this.gain.cancelScheduledValues(at);
+      this.gain.cancel(at);
       this.gain.set(0, at);
       this.gain.set(0, at + this.params.delay);
       this.gain.set(this.params.amount, at + this.params.delay + this.params.attack, 1);
